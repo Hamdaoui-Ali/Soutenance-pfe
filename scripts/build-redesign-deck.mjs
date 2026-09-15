@@ -310,6 +310,238 @@ function slide5() {
   note(slide, 5);
 }
 
+function nodeRail(slide, { x, y, w = 1.12, title, subtitle = "", color = C.blue, light = false, dashed = false }) {
+  dot(slide, x + w / 2 - 0.18, y, 0.36, light ? C.ivory : C.graphite, { lineColor: color, lineTransparency: 0, lineWidth: 1.5 });
+  dot(slide, x + w / 2 - 0.065, y + 0.115, 0.13, color, { line: false });
+  tx(slide, title, x, y + 0.52, w, 0.22, 12.2, light ? C.ink : C.snow, { fontFace: FONTS.head, bold: true, align: "center" });
+  if (subtitle) tx(slide, subtitle, x - 0.16, y + 0.84, w + 0.32, 0.20, 8.2, color, { align: "center", valign: "top" });
+  return dashed;
+}
+
+function slide6() {
+  const slide = pptx.addSlide();
+  heading(slide, 6, 2, "Architecture", "Architecture fonctionnelle", "La plateforme sépare le raisonnement, l'exécution, l'autorisation et la preuve.");
+  mono(slide, "RESPONSIBILITY MAP", 0.80, 2.24, 2.60, 0.18, 8.4, C.cyan, { charSpacing: 1.2 });
+
+  rect(slide, 0.82, 2.62, 7.58, 0.72, C.slate, { lineColor: C.amber, lineTransparency: 0, lineWidth: 1.0 });
+  mono(slide, "01 · GATE HUMAINE", 1.08, 2.86, 1.70, 0.16, 7.7, C.amber, { charSpacing: 0.75 });
+  tx(slide, "intention · validation · décision sensible", 3.02, 2.82, 4.78, 0.20, 12.4, C.snow, { fontFace: FONTS.head, bold: true });
+
+  rect(slide, 0.82, 3.58, 7.58, 0.72, C.slate, { lineColor: C.blue, lineTransparency: 0, lineWidth: 1.0 });
+  mono(slide, "02 · ORCHESTRATEUR", 1.08, 3.82, 1.90, 0.16, 7.7, C.blue, { charSpacing: 0.75 });
+  tx(slide, "état métier · transitions · contexte", 3.02, 3.78, 4.78, 0.20, 12.4, C.snow, { fontFace: FONTS.head, bold: true });
+
+  rect(slide, 0.82, 4.54, 7.58, 0.96, C.slate2, { lineColor: C.cyan, lineTransparency: 0, lineWidth: 1.0 });
+  mono(slide, "03 · AGENTS SPÉCIALISÉS", 1.08, 4.76, 2.10, 0.16, 7.7, C.cyan, { charSpacing: 0.75 });
+  const agents = [["analyse", 3.52], ["plan", 4.62], ["transform", 5.72], ["répare", 6.82]];
+  agents.forEach(([label, x]) => {
+    dot(slide, x, 4.79, 0.18, C.cyan, { line: false });
+    mono(slide, label, x + 0.27, 4.78, 0.82, 0.17, 7.2, C.mist, { charSpacing: 0.35 });
+  });
+
+  rect(slide, 0.82, 5.70, 7.58, 0.72, C.slate, { lineColor: C.blue, lineTransparency: 0, lineWidth: 1.0 });
+  mono(slide, "04 · SERVICES", 1.08, 5.94, 1.34, 0.16, 7.7, C.blue, { charSpacing: 0.75 });
+  tx(slide, "patch · build · tests · checks", 3.02, 5.90, 4.78, 0.20, 12.4, C.snow, { fontFace: FONTS.head, bold: true });
+
+  rect(slide, 8.92, 2.62, 3.42, 3.80, C.slate2, { lineColor: C.mint, lineTransparency: 0, lineWidth: 1.0 });
+  mono(slide, "05 · EVIDENCE REGISTRY", 9.24, 2.92, 2.62, 0.18, 8.0, C.mint, { charSpacing: 0.75 });
+  tx(slide, "Une décision\nreste attachée\nà son état.", 9.24, 3.42, 2.36, 0.96, 22, C.snow, { fontFace: FONTS.head, bold: true, valign: "top" });
+  rule(slide, 9.24, 4.72, 2.30, 0, C.mint, 1.6);
+  mono(slide, "ARTIFACT", 9.24, 4.94, 1.0, 0.16, 7.6, C.mint, { charSpacing: 0.75 });
+  tx(slide, "checksum · trace · preuve", 9.24, 5.24, 2.52, 0.22, 10.3, C.mist, { fontFace: FONTS.mono, bold: true });
+  rule(slide, 8.40, 3.94, 0.48, 0, C.mint, 1.3, { endArrowType: "triangle" });
+  rule(slide, 8.40, 5.98, 0.48, 0, C.mint, 1.3, { endArrowType: "triangle" });
+  mono(slide, "L'ÉTAT EST MÉTIER · LA COMMANDE EST DÉTERMINISTE", 0.82, 6.64, 6.80, 0.18, 7.8, C.mist, { charSpacing: 0.78 });
+  note(slide, 6);
+}
+
+function slide7() {
+  const slide = pptx.addSlide();
+  heading(slide, 7, 2, "Architecture", "Deux toolchains, un même contrat", "Java et Angular gardent leurs outils ; les gates et les preuves restent communs.");
+  mono(slide, "PIPELINES SPÉCIFIQUES", 0.80, 2.24, 2.40, 0.18, 8.4, C.cyan, { charSpacing: 1.2 });
+  rule(slide, 6.66, 2.58, 0, 3.62, C.steel, 0.8, { dash: "dash" });
+
+  mono(slide, "JAVA / SPRING BOOT", 0.92, 2.72, 3.10, 0.18, 10.0, C.blue, { charSpacing: 1.0 });
+  tx(slide, "JDK · Maven · OpenRewrite", 0.92, 3.02, 3.30, 0.22, 12.0, C.snow, { fontFace: FONTS.head, bold: true });
+  rule(slide, 1.34, 3.86, 4.72, 0, C.blue, 1.7);
+  const java = [["JDK", 1.10], ["Maven", 2.36], ["Rewrite", 3.62], ["Tests", 4.88]];
+  java.forEach(([label, x], i) => {
+    nodeRail(slide, { x, y: 3.68, w: 0.86, title: label, subtitle: i === 3 ? "preuve" : "outil", color: i === 3 ? C.mint : C.blue });
+  });
+
+  mono(slide, "ANGULAR", 7.08, 2.72, 2.10, 0.18, 10.0, C.cyan, { charSpacing: 1.0 });
+  tx(slide, "Node.js · npm · CLI · TypeScript", 7.08, 3.02, 4.45, 0.22, 12.0, C.snow, { fontFace: FONTS.head, bold: true });
+  rule(slide, 7.50, 3.86, 4.72, 0, C.cyan, 1.7);
+  const angular = [["Node", 7.24], ["npm", 8.50], ["CLI", 9.76], ["Build", 11.02]];
+  angular.forEach(([label, x], i) => {
+    nodeRail(slide, { x, y: 3.68, w: 0.86, title: label, subtitle: i === 3 ? "preuve" : "outil", color: i === 3 ? C.mint : C.cyan });
+  });
+
+  rect(slide, 0.92, 5.58, 11.42, 0.66, C.slate2, { lineColor: C.amber, lineTransparency: 0, lineWidth: 1.0 });
+  mono(slide, "CONTRAT COMMUN", 1.20, 5.82, 1.70, 0.16, 7.7, C.amber, { charSpacing: 0.85 });
+  tx(slide, "state", 3.52, 5.78, 0.86, 0.22, 10.4, C.snow, { fontFace: FONTS.mono, bold: true, align: "center" });
+  tx(slide, "checksum", 4.72, 5.78, 1.14, 0.22, 10.4, C.snow, { fontFace: FONTS.mono, bold: true, align: "center" });
+  tx(slide, "gate", 6.24, 5.78, 0.72, 0.22, 10.4, C.snow, { fontFace: FONTS.mono, bold: true, align: "center" });
+  tx(slide, "validation", 7.44, 5.78, 1.30, 0.22, 10.4, C.snow, { fontFace: FONTS.mono, bold: true, align: "center" });
+  tx(slide, "historique", 9.24, 5.78, 1.18, 0.22, 10.4, C.snow, { fontFace: FONTS.mono, bold: true, align: "center" });
+  note(slide, 7);
+}
+
+function slide8() {
+  const slide = pptx.addSlide();
+  heading(slide, 8, 2, "Architecture", "Le parcours de migration", "Chaque transition critique associe un état, un gate, une preuve et une revalidation.");
+  mono(slide, "STATE → GATE → PROOF", 0.80, 2.24, 2.70, 0.18, 8.4, C.cyan, { charSpacing: 1.2 });
+  const stages = [
+    ["qualifier", C.blue], ["analyser", C.cyan], ["planifier", C.cyan], ["transformer", C.blue], ["valider", C.mint], ["réparer", C.coral], ["sceller", C.mint],
+  ];
+  const xs = [0.96, 2.62, 4.28, 5.94, 7.60, 9.26, 10.92];
+  rule(slide, 1.15, 3.88, 10.90, 0, C.steelLight, 1.5);
+  stages.forEach(([label, color], i) => {
+    nodeRail(slide, { x: xs[i], y: 3.68, w: 0.92, title: label, subtitle: i === 0 ? "entrée" : i === 6 ? "preuve" : "état", color });
+    if (i < stages.length - 1) {
+      const nextColor = stages[i + 1][1];
+      rule(slide, xs[i] + 1.02, 3.88, xs[i + 1] - xs[i] - 1.08, 0, nextColor, 1.3, { endArrowType: "triangle" });
+    }
+  });
+  rule(slide, 5.06, 2.82, 0, 2.12, C.amber, 1.0, { dash: "dash" });
+  rule(slide, 8.38, 2.82, 0, 2.12, C.amber, 1.0, { dash: "dash" });
+  mono(slide, "GATE", 4.70, 2.62, 0.72, 0.16, 7.5, C.amber, { align: "center", charSpacing: 0.6 });
+  mono(slide, "GATE", 8.02, 2.62, 0.72, 0.16, 7.5, C.amber, { align: "center", charSpacing: 0.6 });
+  rect(slide, 0.96, 5.24, 3.26, 0.78, C.slate, { lineColor: C.blue, lineTransparency: 0, lineWidth: 0.9 });
+  mono(slide, "ÉTAT", 1.22, 5.48, 0.70, 0.16, 7.8, C.blue, { charSpacing: 0.8 });
+  tx(slide, "ce que le système sait", 2.18, 5.44, 1.72, 0.20, 10.2, C.snow, { fontFace: FONTS.head, bold: true });
+  rect(slide, 4.56, 5.24, 3.26, 0.78, C.slate, { lineColor: C.amber, lineTransparency: 0, lineWidth: 0.9 });
+  mono(slide, "GATE", 4.82, 5.48, 0.70, 0.16, 7.8, C.amber, { charSpacing: 0.8 });
+  tx(slide, "ce que l'humain autorise", 5.76, 5.44, 1.76, 0.20, 10.2, C.snow, { fontFace: FONTS.head, bold: true });
+  rect(slide, 8.16, 5.24, 3.68, 0.78, C.slate, { lineColor: C.mint, lineTransparency: 0, lineWidth: 0.9 });
+  mono(slide, "PREUVE", 8.42, 5.48, 0.92, 0.16, 7.8, C.mint, { charSpacing: 0.8 });
+  tx(slide, "ce qui permet de revalider", 9.56, 5.44, 1.92, 0.20, 10.2, C.snow, { fontFace: FONTS.head, bold: true });
+  note(slide, 8);
+}
+
+function slide9() {
+  const slide = pptx.addSlide();
+  heading(slide, 9, 3, "Réalisation", "Java / Spring Boot : le parcours de référence", "La trajectoire Java porte le parcours de modernisation le plus mature du prototype.");
+  mono(slide, "REFERENCE PATH", 0.80, 2.24, 2.10, 0.18, 8.4, C.blue, { charSpacing: 1.2 });
+  tx(slide, "Spring Boot", 0.82, 2.74, 2.30, 0.30, 18, C.snow, { fontFace: FONTS.head, bold: true });
+  tx(slide, "Maven · OpenRewrite", 0.84, 3.18, 2.42, 0.22, 10.6, C.mist, { fontFace: FONTS.mono, bold: true });
+  rule(slide, 3.18, 3.70, 7.54, 0, C.blue, 1.8);
+  const versions = [["2.1", "legacy", C.amber], ["2.7", "stabiliser", C.blue], ["3.5", "moderniser", C.cyan], ["4.0", "cible", C.mint]];
+  const xs = [3.24, 5.22, 7.20, 9.18];
+  versions.forEach(([version, label, color], i) => {
+    nodeRail(slide, { x: xs[i], y: 3.50, w: 1.20, title: version, subtitle: label, color });
+  });
+  mono(slide, "RUNTIME", 3.24, 4.92, 1.08, 0.18, 7.7, C.mist, { charSpacing: 0.9 });
+  rule(slide, 4.62, 5.02, 5.40, 0, C.steelLight, 1.0);
+  tx(slide, "Java 11", 4.40, 5.24, 0.92, 0.20, 10.2, C.snow, { fontFace: FONTS.mono, bold: true, align: "center" });
+  tx(slide, "Java 17", 6.42, 5.24, 0.92, 0.20, 10.2, C.snow, { fontFace: FONTS.mono, bold: true, align: "center" });
+  tx(slide, "Java 21", 8.46, 5.24, 0.92, 0.20, 10.2, C.snow, { fontFace: FONTS.mono, bold: true, align: "center" });
+  rect(slide, 10.48, 2.72, 1.86, 2.78, C.slate2, { lineColor: C.mint, lineTransparency: 0, lineWidth: 1.0 });
+  mono(slide, "STATUT", 10.76, 3.04, 1.20, 0.16, 7.8, C.mint, { charSpacing: 0.9 });
+  tx(slide, "Réalisé", 10.76, 3.48, 1.36, 0.28, 19, C.snow, { fontFace: FONTS.head, bold: true });
+  tx(slide, "parcours de\nréférence", 10.76, 4.00, 1.28, 0.48, 11.2, C.mist, { fontFace: FONTS.head, bold: true, valign: "top" });
+  rule(slide, 10.76, 4.92, 1.18, 0, C.mint, 1.6);
+  note(slide, 9);
+}
+
+function slide10() {
+  const slide = pptx.addSlide();
+  heading(slide, 10, 3, "Réalisation", "Angular : une couverture progressive", "Le même modèle de gouvernance est transférable, avec une couverture encore partielle.");
+  mono(slide, "EVIDENCE LINE", 0.80, 2.24, 1.95, 0.18, 8.4, C.cyan, { charSpacing: 1.2 });
+  tx(slide, "PARTIEL", 0.82, 2.92, 2.04, 0.46, 28, C.amber, { fontFace: FONTS.head, bold: true });
+  tx(slide, "preuve par transition", 0.84, 3.52, 2.18, 0.22, 10.6, C.mist, { fontFace: FONTS.mono, bold: true });
+  rule(slide, 3.36, 3.88, 7.52, 0, C.mint, 1.8);
+  const versions = [["18", "source", C.mint], ["19", "scellée", C.mint], ["20", "scellée", C.mint], ["21", "préparée", C.amber]];
+  const xs = [3.38, 5.34, 7.30, 9.26];
+  versions.forEach(([version, label, color], i) => {
+    nodeRail(slide, { x: xs[i], y: 3.68, w: 1.10, title: version, subtitle: label, color });
+  });
+  rule(slide, 4.64, 3.88, 0.58, 0, C.mint, 1.8, { endArrowType: "triangle" });
+  rule(slide, 6.60, 3.88, 0.58, 0, C.mint, 1.8, { endArrowType: "triangle" });
+  rule(slide, 8.56, 3.88, 0.58, 0, C.amber, 1.4, { endArrowType: "triangle", dash: "dash" });
+  mono(slide, "18 → 19  SCELLÉE", 3.64, 5.18, 1.72, 0.18, 7.4, C.mint, { charSpacing: 0.55, align: "center" });
+  mono(slide, "19 → 20  SCELLÉE", 5.60, 5.18, 1.72, 0.18, 7.4, C.mint, { charSpacing: 0.55, align: "center" });
+  mono(slide, "20 → 21  NON DÉMARRÉE", 7.86, 5.18, 2.20, 0.18, 7.4, C.amber, { charSpacing: 0.45, align: "center" });
+  rule(slide, 0.84, 6.02, 11.44, 0, C.steel, 0.8);
+  mono(slide, "GARDE-FOU", 0.84, 6.28, 1.12, 0.18, 7.8, C.coral, { charSpacing: 0.75 });
+  tx(slide, "11 → 21 : migration non démontrée", 2.22, 6.24, 3.72, 0.22, 11.0, C.snow, { fontFace: FONTS.head, bold: true });
+  tx(slide, "Une extension visée, pas une preuve obtenue.", 7.20, 6.26, 4.20, 0.20, 9.6, C.mist, { align: "right", italic: true });
+  note(slide, 10);
+}
+
+function slide11() {
+  const slide = pptx.addSlide();
+  heading(slide, 11, 3, "Réalisation", "Les agents produisent, l'humain autorise", "Les agents sont spécialisés et bornés ; les gates gardent l'autorité finale.");
+  mono(slide, "AGENT CONSTELLATION", 0.80, 2.24, 2.55, 0.18, 8.4, C.cyan, { charSpacing: 1.2 });
+  const center = { x: 6.02, y: 3.72 };
+  dot(slide, center.x, center.y, 1.02, C.slate2, { lineColor: C.blue, lineTransparency: 0, lineWidth: 1.6 });
+  mono(slide, "ORCHESTRATEUR", center.x + 0.10, center.y + 0.29, 0.82, 0.16, 7.2, C.blue, { align: "center", charSpacing: 0.35 });
+  tx(slide, "état", center.x + 0.10, center.y + 0.56, 0.82, 0.18, 9.5, C.snow, { fontFace: FONTS.head, bold: true, align: "center" });
+  const agentNodes = [
+    ["Analyste", "diagnostiquer", 2.02, 2.84, C.blue],
+    ["Reviewer", "relire", 4.26, 2.14, C.cyan],
+    ["Planificateur", "ordonner", 7.84, 2.14, C.cyan],
+    ["Transformateur", "proposer", 10.06, 2.84, C.amber],
+    ["Réparateur", "corriger", 3.56, 5.08, C.coral],
+    ["Assistant", "éclairer", 8.44, 5.08, C.mint],
+  ];
+  agentNodes.forEach(([label, verb, x, y, color]) => {
+    rule(slide, x + 0.42, y + 0.42, center.x + 0.51 - (x + 0.42), center.y + 0.51 - (y + 0.42), C.steelLight, 1.0);
+    dot(slide, x, y, 0.84, C.graphite, { lineColor: color, lineTransparency: 0, lineWidth: 1.4 });
+    dot(slide, x + 0.30, y + 0.30, 0.24, color, { line: false });
+    tx(slide, label, x - 0.34, y + 0.98, 1.52, 0.20, 10.6, C.snow, { fontFace: FONTS.head, bold: true, align: "center" });
+    mono(slide, verb, x - 0.26, y + 1.26, 1.36, 0.16, 7.3, color, { align: "center", charSpacing: 0.45 });
+  });
+  rect(slide, 11.36, 2.76, 0.92, 2.48, C.slate2, { lineColor: C.amber, lineTransparency: 0, lineWidth: 1.0 });
+  mono(slide, "HUMAIN", 11.50, 3.04, 0.64, 0.16, 7.3, C.amber, { align: "center", charSpacing: 0.55 });
+  tx(slide, "gate", 11.50, 3.52, 0.64, 0.22, 15, C.snow, { fontFace: FONTS.head, bold: true, align: "center" });
+  tx(slide, "autorise\nles décisions\nsensibles", 11.50, 4.00, 0.64, 0.58, 8.6, C.mist, { align: "center", valign: "top" });
+  rule(slide, 11.36, 4.30, -0.82, -0.14, C.amber, 1.1, { endArrowType: "triangle" });
+  rule(slide, 0.84, 6.10, 11.50, 0, C.steel, 0.8);
+  mono(slide, "AGENTS", 0.84, 6.34, 0.92, 0.16, 7.8, C.cyan, { charSpacing: 0.8 });
+  tx(slide, "artefacts / propositions", 2.04, 6.30, 2.20, 0.20, 10.2, C.snow, { fontFace: FONTS.head, bold: true });
+  mono(slide, "FRONTIÈRE", 5.12, 6.34, 1.10, 0.16, 7.8, C.amber, { charSpacing: 0.8 });
+  tx(slide, "aucun accès libre au terminal", 6.54, 6.30, 2.56, 0.20, 10.2, C.snow, { fontFace: FONTS.head, bold: true });
+  mono(slide, "HUMAIN", 9.98, 6.34, 0.92, 0.16, 7.8, C.mint, { charSpacing: 0.8 });
+  tx(slide, "décision finale", 11.10, 6.30, 1.24, 0.20, 9.8, C.snow, { fontFace: FONTS.head, bold: true, align: "right" });
+  note(slide, 11);
+}
+
+function slide12() {
+  const slide = pptx.addSlide();
+  heading(slide, 12, 3, "Réalisation", "Réparer sous contrôle", "Un échec est gelé, contextualisé, décidé sous contrôle puis revalidé.");
+  mono(slide, "GOVERNED REPAIR", 0.80, 2.24, 2.20, 0.18, 8.4, C.cyan, { charSpacing: 1.2 });
+  const top = [["01", "Échec\ngelé", 1.04, C.coral], ["02", "Contexte\nrassemblé", 3.16, C.blue], ["03", "Proposition\nagent", 5.28, C.cyan], ["04", "Review", 7.40, C.amber]];
+  top.forEach(([n, label, x, color], i) => {
+    rect(slide, x, 3.02, 1.50, 0.92, C.slate, { lineColor: color, lineTransparency: 0, lineWidth: 1.0 });
+    mono(slide, n, x + 0.16, 3.20, 0.26, 0.16, 7.4, color, { charSpacing: 0.2 });
+    tx(slide, label, x + 0.48, 3.18, 0.82, 0.42, 11.0, C.snow, { fontFace: FONTS.head, bold: true, valign: "top" });
+    if (i < top.length - 1) arrow(slide, x + 1.54, 3.48, x + 2.02, 3.48, C.steelLight, 1.1);
+  });
+  rect(slide, 5.30, 4.46, 2.72, 0.96, C.amber, { line: false });
+  mono(slide, "GATE", 5.58, 4.70, 0.70, 0.16, 7.8, C.ink, { charSpacing: 0.8 });
+  tx(slide, "DÉCISION HUMAINE", 6.48, 4.64, 1.20, 0.22, 11.4, C.ink, { fontFace: FONTS.head, bold: true, align: "center" });
+  arrow(slide, 8.16, 3.48, 9.20, 3.48, C.amber, 1.3);
+  rect(slide, 9.24, 3.02, 1.52, 0.92, C.slate, { lineColor: C.blue, lineTransparency: 0, lineWidth: 1.0 });
+  mono(slide, "05", 9.42, 3.20, 0.26, 0.16, 7.4, C.blue, { charSpacing: 0.2 });
+  tx(slide, "Apply\nisolé", 9.78, 3.18, 0.72, 0.42, 11.0, C.snow, { fontFace: FONTS.head, bold: true, valign: "top" });
+  arrow(slide, 10.80, 3.48, 11.34, 3.48, C.mint, 1.2);
+  rect(slide, 11.38, 3.02, 1.00, 0.92, C.slate, { lineColor: C.mint, lineTransparency: 0, lineWidth: 1.0 });
+  mono(slide, "06", 11.52, 3.20, 0.26, 0.16, 7.4, C.mint, { charSpacing: 0.2 });
+  tx(slide, "Build\nTest", 11.84, 3.18, 0.40, 0.42, 10.0, C.snow, { fontFace: FONTS.head, bold: true, valign: "top" });
+  rule(slide, 11.88, 4.02, 0, 0.72, C.mint, 1.1, { endArrowType: "triangle" });
+  rule(slide, 11.88, 4.74, -8.62, 0.0, C.mint, 1.1, { endArrowType: "triangle" });
+  mono(slide, "REVALIDATION", 8.94, 5.00, 1.40, 0.18, 7.8, C.mint, { charSpacing: 0.7 });
+  rule(slide, 5.28, 5.58, 2.76, 0, C.steel, 0.8, { dash: "dash" });
+  mono(slide, "CHECKSUM", 1.04, 5.92, 1.10, 0.17, 7.7, C.cyan, { charSpacing: 0.8 });
+  tx(slide, "décider sur le bon artefact", 2.36, 5.88, 2.28, 0.20, 9.6, C.mist, { fontFace: FONTS.head, bold: true });
+  mono(slide, "BORNAGE", 5.08, 5.92, 0.96, 0.17, 7.7, C.amber, { charSpacing: 0.8 });
+  tx(slide, "limiter les tentatives", 6.28, 5.88, 1.72, 0.20, 9.6, C.mist, { fontFace: FONTS.head, bold: true });
+  mono(slide, "HISTORIQUE", 8.56, 5.92, 1.14, 0.17, 7.7, C.mint, { charSpacing: 0.8 });
+  tx(slide, "conserver la décision", 9.94, 5.88, 2.24, 0.20, 9.6, C.mist, { fontFace: FONTS.head, bold: true });
+  note(slide, 12);
+}
+
 function placeholderSlide(number, current, title) {
   const slide = pptx.addSlide();
   heading(slide, number, current, CHAPTERS[current] ?? "", title, "Composition réservée à la branche de reconstruction suivante.");
@@ -325,8 +557,15 @@ slide2();
 slide3();
 slide4();
 slide5();
-for (let number = 6; number <= 18; number += 1) {
-  const current = number <= 8 ? 2 : number <= 12 ? 3 : number === 13 ? 4 : number <= 16 ? 5 : 6;
+slide6();
+slide7();
+slide8();
+slide9();
+slide10();
+slide11();
+slide12();
+for (let number = 13; number <= 18; number += 1) {
+  const current = number === 13 ? 4 : number <= 16 ? 5 : 6;
   placeholderSlide(number, current, SLIDE_TITLES[number - 1]);
 }
 
