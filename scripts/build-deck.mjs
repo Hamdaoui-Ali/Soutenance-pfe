@@ -331,9 +331,92 @@ function slide5() {
   note(slide, "Expliquer la naissance de la Migration Factory : après une année de pratiques manuelles et de prompts, la demande augmente et il devient nécessaire de rendre le parcours réutilisable. Distinguer strictement le périmètre démontré de la vision cible.");
 }
 
+function slide6() {
+  const slide = pptx.addSlide();
+  heading(slide, 6, 2, "Architecture", "Architecture fonctionnelle", "La valeur vient de la séparation des responsabilités : raisonner, exécuter, vérifier et décider.");
+  sectionLabel(slide, "Le système en une vue", 0.72, 2.24, 2.5, C.cyan);
+  card(slide, 0.72, 2.66, 1.92, 1.62, "Humain", "Intention\nValidation\nDécision sensible", { accent: C.cyan, fill: C.surface3, titleSize: 13, bodySize: 10.2 });
+  status(slide, "AUTORITÉ FINALE", 0.96, 4.48, "blue", 1.43);
+  card(slide, 3.08, 2.66, 2.05, 1.62, "Orchestrateur", "États\nTransitions\nContexte", { accent: C.blue, titleSize: 12.2, bodySize: 10.2 });
+  card(slide, 5.57, 2.44, 2.58, 2.06, "Agents IA spécialisés", "Analyse  ·  Planification\nTransformation  ·  Réparation\nReview  ·  Assistance", { accent: C.purple, titleSize: 12.2, bodySize: 9.6 });
+  card(slide, 8.58, 2.66, 2.45, 1.62, "Services déterministes", "Patches\nBuild / tests\nChecksums", { accent: C.green, titleSize: 12.2, bodySize: 10.2 });
+  card(slide, 11.45, 2.66, 1.12, 1.62, "État &\npreuves", "DB\nLedger", { accent: C.amber, titleSize: 10.8, bodySize: 9.5 });
+  arrow(slide, 2.70, 3.47, 3.02, 3.47, C.cyan, 1.5);
+  arrow(slide, 5.18, 3.47, 5.48, 3.47, C.blue, 1.5);
+  arrow(slide, 8.20, 3.47, 8.50, 3.47, C.purple, 1.5);
+  arrow(slide, 11.08, 3.47, 11.38, 3.47, C.green, 1.5);
+  line(slide, 12.00, 4.35, 0, 0.54, C.amber, 1.2, { dash: "dash" });
+  box(slide, 3.06, 5.05, 9.50, 0.78, C.surface, { round: true, line: false });
+  sectionLabel(slide, "Gates de promotion", 3.32, 5.27, 1.8, C.cyan);
+  const gates = ["Préconditions", "Validation humaine", "Application isolée", "Revalidation"];
+  gates.forEach((g, i) => pill(slide, g, 5.18 + i * 1.75, 5.22, 1.50, i === 1 ? C.cyan : C.surface2, i === 1 ? C.navyText : C.muted, { fontSize: 8.3, h: 0.30 }));
+  tx(slide, "Aucun agent ne possède l'autorité finale sur l'artefact.", 3.10, 6.18, 8.8, 0.26, 13, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center" });
+  note(slide, "Présenter la séparation entre agents qui raisonnent et services déterministes qui exécutent/vérifient. L'humain reste l'autorité finale, surtout au niveau des gates et des décisions sensibles.");
+}
+
+function slide7() {
+  const slide = pptx.addSlide();
+  heading(slide, 7, 2, "Architecture", "Architecture technique", "Deux toolchains distinctes, un même noyau de gouvernance : états, preuves, checksums et gates.");
+  sectionLabel(slide, "Noyau commun", 0.72, 2.22, 2.0, C.cyan);
+  box(slide, 0.72, 2.54, 11.65, 0.70, C.surface3, { round: true, line: false });
+  const common = ["API / orchestration", "SQLite état", "Evidence ledger", "Checksums", "Gates"];
+  common.forEach((g, i) => pill(slide, g, 1.05 + i * 2.16, 2.76, 1.70, i === 4 ? C.cyan : C.surface2, i === 4 ? C.navyText : C.ink, { fontSize: 8.7, h: 0.28 }));
+  const columns = [
+    { x: 0.72, color: C.blue, title: "JAVA / SPRING BOOT", items: [["JDK", "11  ·  17  ·  21"], ["Maven", "résolution & build"], ["OpenRewrite", "transformations codifiées"], ["Tests", "backend + intégration"]] },
+    { x: 6.88, color: C.cyan, title: "ANGULAR", items: [["Node / npm", "runtime & dépendances"], ["Angular CLI", "migrations versionnées"], ["TypeScript / RxJS", "types & contrats"], ["Checks", "statique + build"]] },
+  ];
+  columns.forEach((col) => {
+    box(slide, col.x, 3.64, 5.50, 2.28, C.surface, { round: true, lineColor: col.color, lineTransparency: 0, lineWidth: 1.0 });
+    tx(slide, col.title, col.x + 0.26, 3.88, 4.8, 0.20, 9, col.color, { fontFace: FONT_MONO, bold: true, charSpacing: 1.0 });
+    col.items.forEach(([a, b], i) => {
+      const y = 4.24 + i * 0.38;
+      dot(slide, col.x + 0.30, y + 0.07, 0.12, col.color, { line: false });
+      tx(slide, a, col.x + 0.54, y, 1.48, 0.20, 10.2, C.ink, { fontFace: FONT_HEAD, bold: true });
+      tx(slide, b, col.x + 2.10, y + 0.01, 2.95, 0.18, 9.2, C.muted);
+    });
+  });
+  line(slide, 6.60, 3.92, 0, 1.90, C.surface3, 1.0, { dash: "dash" });
+  box(slide, 0.72, 6.18, 11.65, 0.58, C.surface2, { round: true, line: false });
+  tx(slide, "Même contrat de contrôle  ≠  même chaîne technique", 1.10, 6.35, 10.90, 0.20, 12.5, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center" });
+  note(slide, "Montrer pourquoi Java et Angular ne sont pas fusionnés artificiellement : ils gardent des toolchains spécifiques, tandis que la gouvernance et les preuves sont communes.");
+}
+
+function slide8() {
+  const slide = pptx.addSlide();
+  heading(slide, 8, 2, "Architecture", "Workflow complet de migration", "Une migration avance par états explicites : chaque passage critique produit une preuve et peut être revalidé.");
+  sectionLabel(slide, "Le parcours contrôlé", 0.72, 2.24, 2.5, C.cyan);
+  const steps = [
+    ["01", "Qualification", "scope", C.cyan],
+    ["02", "Analyse", "risques", C.blue],
+    ["03", "Plan", "actions", C.purple],
+    ["04", "Transformation", "patch", C.amber],
+    ["05", "Validation", "build / test", C.green],
+    ["06", "Réparation", "review", C.red],
+    ["07", "Scellement", "preuve", C.cyan],
+  ];
+  steps.forEach(([n, title, meta, color], i) => {
+    const x = 0.72 + i * 1.70;
+    box(slide, x, 2.78, 1.42, 1.70, i === 6 ? C.surface3 : C.surface, { round: true, lineColor: color, lineTransparency: 0, lineWidth: 1.0 });
+    dot(slide, x + 0.18, 3.02, 0.28, color, { line: false });
+    tx(slide, n, x + 0.18, 3.09, 0.28, 0.12, 7, C.navyText, { fontFace: FONT_MONO, bold: true, align: "center" });
+    tx(slide, title, x + 0.17, 3.48, 1.08, 0.42, 11, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center", valign: "top" });
+    tx(slide, meta, x + 0.17, 4.10, 1.08, 0.16, 8.5, color, { fontFace: FONT_MONO, align: "center", bold: true });
+    if (i < steps.length - 1) arrow(slide, x + 1.45, 3.63, x + 1.65, 3.63, C.surface3, 1.1);
+  });
+  box(slide, 0.72, 5.02, 11.65, 0.78, C.surface2, { round: true, line: false });
+  const contract = ["État", "Gate", "Preuve", "Revalidation"];
+  contract.forEach((g, i) => {
+    const x = 1.10 + i * 2.70;
+    if (i > 0) arrow(slide, x - 0.56, 5.40, x - 0.10, 5.40, C.cyan, 1.2);
+    pill(slide, g, x, 5.25, 1.48, i === 2 ? C.cyan : C.surface, i === 2 ? C.navyText : C.ink, { fontSize: 9.5, h: 0.30 });
+  });
+  tx(slide, "La machine ne promet pas une action : elle exige une preuve avant de passer à la suivante.", 1.18, 6.28, 10.70, 0.25, 12.5, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center" });
+  note(slide, "Décrire la migration comme un workflow contrôlé, pas comme une suite de prompts. Faire le lien avec la suite : l'étape de réparation revient vers la validation et la revalidation.");
+}
+
 function placeholders() {
-  // Replaced by the architecture, realization, demo, evidence and conclusion parts.
-  for (let i = 6; i <= 18; i++) {
+  // Replaced by the realization, demo, evidence and conclusion parts.
+  for (let i = 9; i <= 18; i++) {
     const slide = pptx.addSlide();
     heading(slide, i, Math.min(6, Math.floor((i - 3) / 3)), "À compléter", `Slide ${i}`, "Contenu éditable ajouté dans les commits suivants.");
     card(slide, 0.72, 2.45, 11.6, 2.0, "Placeholder", "Cette page est volontairement remplacée dans la suite de la production.", { accent: C.cyan });
@@ -345,6 +428,9 @@ slide2();
 slide3();
 slide4();
 slide5();
+slide6();
+slide7();
+slide8();
 placeholders();
 
 const out = resolve(process.env.DECK_OUTPUT ?? "dist/Agentic-Migration-Platform-Soutenance.pptx");
