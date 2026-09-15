@@ -591,13 +591,122 @@ function slide13() {
   note(slide, "Faire la démo autour d'une seule décision : inspecter la correction Angular G10, vérifier la preuve, puis approuver/modifier/rejeter. Préciser que l'interface est locale, déterministe, anonymisée et basée sur des états préparés. Le projet réel CGI et les environnements Azure ne sont pas exposés.");
 }
 
-function placeholders() {
-  // Replaced by the evidence and conclusion parts.
-  for (let i = 14; i <= 18; i++) {
-    const slide = pptx.addSlide();
-    heading(slide, i, i < 17 ? 5 : 6, "À compléter", `Slide ${i}`, "Contenu éditable ajouté dans les commits suivants.");
-    card(slide, 0.72, 2.45, 11.6, 2.0, "Placeholder", "Cette page est volontairement remplacée dans la suite de la production.", { accent: C.cyan });
-  }
+function slide14() {
+  const slide = pptx.addSlide();
+  heading(slide, 14, 5, "Résultats", "Résultats et preuves", "Ce qui est démontré : le contrôle, la traçabilité et la revalidation — pas un gain de temps extrapolé.");
+  status(slide, "PREUVES PONCTUELLES · NON BENCHMARKÉES", 0.72, 2.22, "muted", 2.92);
+  const cards = [
+    { x: 0.72, color: C.green, title: "Campagne Java", big: "607", label: "tests backend passés", detail: "4 tests ignorés", badge: "RÉALISÉ" },
+    { x: 4.74, color: C.blue, title: "Validation frontend", big: "✓", label: "type · statique · conformité", detail: "build validé au point d'observation", badge: "VALIDÉ" },
+    { x: 8.76, color: C.cyan, title: "Transitions Angular", big: "2", label: "transitions scellées", detail: "18→19 · 19→20  |  20→21 préparée", badge: "PARTIEL" },
+  ];
+  cards.forEach((item) => {
+    box(slide, item.x, 2.78, 3.56, 2.48, C.surface, { round: true, lineColor: item.color, lineTransparency: 0, lineWidth: 1.0 });
+    tx(slide, item.title.toUpperCase(), item.x + 0.24, 3.06, 2.92, 0.20, 8.5, item.color, { fontFace: FONT_MONO, bold: true, charSpacing: 0.8 });
+    tx(slide, item.big, item.x + 0.24, 3.44, 1.12, 0.60, 30, C.ink, { fontFace: FONT_HEAD, bold: true });
+    tx(slide, item.label, item.x + 1.42, 3.62, 1.80, 0.28, 10.2, C.ink, { fontFace: FONT_HEAD, bold: true, valign: "top" });
+    tx(slide, item.detail, item.x + 0.24, 4.36, 2.92, 0.34, 9.2, C.muted, { valign: "top" });
+    status(slide, item.badge, item.x + 0.24, 4.84, item.badge === "PARTIEL" ? "partial" : "done", 0.98);
+  });
+  box(slide, 0.72, 5.62, 11.60, 0.74, C.surface2, { round: true, line: false });
+  tx(slide, "La contribution observable : une décision laisse une trace et revient dans une boucle de validation.", 1.06, 5.86, 10.92, 0.22, 12.5, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center" });
+  tx(slide, "Les chiffres décrivent un état du prototype ; ils ne constituent pas une mesure comparative.", 0.74, 6.58, 8.8, 0.18, 8.4, C.subtle, { italic: true });
+  note(slide, "Présenter les preuves sans les transformer en KPI : 607 tests backend passés et 4 ignorés, contrôles frontend validés, Angular 18→19 et 19→20 scellées. La baseline frontend 12→11 échecs après intégration peut être dite oralement si nécessaire, mais reste une preuve ponctuelle et non un benchmark.");
+}
+
+function slide15() {
+  const slide = pptx.addSlide();
+  heading(slide, 15, 5, "Résultats", "Difficultés rencontrées et apports techniques", "Chaque difficulté a renforcé un contrat : transformation, commande, version ou persistance.");
+  sectionLabel(slide, "Problème → réponse architecturale", 0.72, 2.25, 3.2, C.cyan);
+  const rows = [
+    ["Patch non applicable", "Diff structuré + validation", C.red],
+    ["Autorité de commande ambiguë", "Manifeste backend", C.amber],
+    ["Profil Angular incompatible", "Catalogue versionné", C.blue],
+    ["Cohérence SQLite", "Base autoritaire réconciliée", C.green],
+  ];
+  rows.forEach(([problem, response, color], i) => {
+    const y = 2.68 + i * 0.72;
+    box(slide, 0.72, y, 4.08, 0.52, C.surface, { round: true, line: false });
+    dot(slide, 0.94, y + 0.18, 0.14, color, { line: false });
+    tx(slide, problem, 1.22, y + 0.14, 3.26, 0.20, 10, C.ink, { fontFace: FONT_HEAD, bold: true });
+    arrow(slide, 4.98, y + 0.26, 5.36, y + 0.26, color, 1.3);
+    box(slide, 5.52, y, 4.18, 0.52, C.surface2, { round: true, line: false });
+    tx(slide, response, 5.80, y + 0.14, 3.56, 0.20, 9.6, C.ink, { bold: true });
+  });
+  box(slide, 10.10, 2.68, 2.24, 3.42, C.surface3, { round: true, line: false });
+  sectionLabel(slide, "Compétences consolidées", 10.36, 2.98, 1.74, C.cyan);
+  const skills = ["Architecture", "Orchestration", "Checksums", "Testing", "Prompt design"];
+  skills.forEach((s, i) => pill(slide, s, 10.36, 3.56 + i * 0.43, 1.70, i === 0 ? C.cyan : C.surface2, i === 0 ? C.navyText : C.muted, { fontSize: 8.6, h: 0.28 }));
+  box(slide, 0.72, 5.82, 8.98, 0.55, C.surface2, { round: true, line: false });
+  tx(slide, "Un prototype utile n'efface pas les difficultés : il les rend explicites et gouvernables.", 1.02, 5.99, 8.38, 0.20, 10.6, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center" });
+  note(slide, "Relier quatre difficultés du rapport à la réponse technique : diff structuré, manifeste backend, catalogue de profils et base autoritaire. Conclure sur les compétences développées, sans transformer cette slide en liste de technologies.");
+}
+
+function slide16() {
+  const slide = pptx.addSlide();
+  heading(slide, 16, 5, "Résultats", "Limites et perspectives", "Le prototype est gouverné ; son industrialisation reste à compléter.");
+  const cols = [
+    { x: 0.72, color: C.amber, title: "AUJOURD'HUI · LIMITES", badge: "LIMITES ACTUELLES", items: ["Authentification et rôles non livrés", "Pas de benchmark manuel contrôlé", "Pas de CI commune", "Couverture Angular incomplète", "Coût / durée LLM non consolidés"] },
+    { x: 6.90, color: C.purple, title: "DEMAIN · VISION CIBLE", badge: "PERSPECTIVES", items: ["Sécurité et rôles industrialisés", "Corpus de benchmark", "Instrumentation coût / durée", ".NET · PHP · Python · React", "On-premise→cloud · cloud→cloud · refactoring"] },
+  ];
+  cols.forEach((col) => {
+    box(slide, col.x, 2.38, 5.42, 3.78, C.surface, { round: true, lineColor: col.color, lineTransparency: 0, lineWidth: 1.0 });
+    sectionLabel(slide, col.title, col.x + 0.28, 2.70, 4.60, col.color);
+    status(slide, col.badge, col.x + 0.28, 3.08, col.color === C.amber ? "partial" : "vision", col.color === C.amber ? 1.38 : 1.02);
+    col.items.forEach((item, i) => {
+      const y = 3.62 + i * 0.47;
+      dot(slide, col.x + 0.32, y + 0.07, 0.12, col.color, { line: false });
+      tx(slide, item, col.x + 0.60, y, 4.35, 0.22, 9.6, C.ink, { bold: i === 0 });
+    });
+  });
+  tx(slide, "Ce qui est visé n'est pas présenté comme livré.", 1.05, 6.48, 11.0, 0.22, 12.5, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center" });
+  note(slide, "Assumer les limites : pas d'authentification/rôles livrés, pas de benchmark manuel contrôlé, pas de CI commune, couverture Angular incomplète, coûts et durées LLM non consolidés. Présenter les extensions multi-langages, multi-frameworks et multi-cloud comme vision cible.");
+}
+
+function slide17() {
+  const slide = pptx.addSlide();
+  heading(slide, 17, 6, "Conclusion", "Conclusion", "La contribution principale est une automatisation gouvernée, traçable et revalidable.");
+  box(slide, 0.72, 2.38, 11.64, 0.86, C.surface3, { round: true, line: false });
+  tx(slide, "Une migration agentique n'est pas une autonomie totale.", 1.06, 2.67, 10.96, 0.28, 18, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center" });
+  const pillars = [
+    ["AGENTS", "Raisonnent\n& proposent", C.purple],
+    ["SERVICES", "Exécutent\n& vérifient", C.green],
+    ["HUMAIN", "Décide\n& assume", C.cyan],
+  ];
+  pillars.forEach(([title, body, color], i) => {
+    const x = 1.02 + i * 3.82;
+    box(slide, x, 3.78, 3.12, 1.64, C.surface, { round: true, lineColor: color, lineTransparency: 0, lineWidth: 1.2 });
+    tx(slide, title, x + 0.22, 4.05, 2.68, 0.20, 8.8, color, { fontFace: FONT_MONO, bold: true, align: "center", charSpacing: 1.1 });
+    tx(slide, body, x + 0.22, 4.48, 2.68, 0.54, 16, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center", valign: "top" });
+  });
+  tx(slide, "Le système automatise le chemin ; la gouvernance garde le contrôle.", 1.18, 5.96, 10.92, 0.26, 13, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center" });
+  tx(slide, "Reasoning   ·   Control   ·   Evidence", 1.18, 6.48, 10.92, 0.20, 9, C.cyan, { fontFace: FONT_MONO, bold: true, align: "center", charSpacing: 1.2 });
+  note(slide, "Conclure avec le principe architectural : les agents raisonnent et proposent, les services déterministes exécutent et vérifient, l'humain contrôle les décisions sensibles. La contribution n'est pas l'autonomie totale, mais une automatisation gouvernée et revalidable.");
+}
+
+function slide18() {
+  const slide = pptx.addSlide();
+  slide.background = { color: C.bg };
+  line(slide, 0.66, 0.62, 0.56, 0, C.cyan, 2.2);
+  tx(slide, "ÉCHANGE", 1.35, 0.50, 1.8, 0.22, 9, C.cyan, { fontFace: FONT_MONO, bold: true, charSpacing: 1.3 });
+  tx(slide, "Questions / Discussion", 0.66, 1.38, 8.7, 0.66, 34, C.ink, { fontFace: FONT_HEAD, bold: true });
+  tx(slide, "Choix d'architecture · preuves disponibles · limites assumées", 0.70, 2.24, 8.8, 0.28, 14, C.muted, { fontFace: FONT_HEAD });
+  const words = [
+    ["REASONING", C.purple, 7.48, 1.62],
+    ["CONTROL", C.cyan, 9.10, 3.04],
+    ["EVIDENCE", C.green, 7.48, 4.46],
+  ];
+  line(slide, 7.52, 1.92, 2.58, 2.92, C.surface3, 1.2, { dash: "dash" });
+  line(slide, 7.82, 4.70, 2.12, -2.80, C.surface3, 1.2, { dash: "dash" });
+  words.forEach(([label, color, x, y]) => {
+    dot(slide, x, y, 0.76, C.surface, { lineColor: color, lineTransparency: 0, lineWidth: 1.5 });
+    dot(slide, x + 0.27, y + 0.27, 0.22, color, { line: false });
+    tx(slide, label, x - 0.36, y + 0.96, 1.48, 0.20, 8.4, color, { fontFace: FONT_MONO, bold: true, align: "center", charSpacing: 0.8 });
+  });
+  box(slide, 0.70, 6.38, 4.30, 0.48, C.surface, { round: true, line: false });
+  tx(slide, "Merci", 0.92, 6.52, 3.86, 0.18, 11, C.ink, { fontFace: FONT_HEAD, bold: true });
+  tx(slide, "AGENTIC MIGRATION PLATFORM  ·  PFE 2026", 7.06, 6.52, 5.24, 0.18, 8.2, C.subtle, { fontFace: FONT_MONO, align: "right", charSpacing: 0.6 });
+  note(slide, "Ouvrir l'échange. Revenir vers les choix d'architecture, les preuves du prototype et les limites assumées. Ne pas introduire de nouveau résultat sur cette slide.");
 }
 
 slide1();
@@ -613,7 +722,11 @@ slide10();
 slide11();
 slide12();
 slide13();
-placeholders();
+slide14();
+slide15();
+slide16();
+slide17();
+slide18();
 
 const out = resolve(process.env.DECK_OUTPUT ?? "dist/Agentic-Migration-Platform-Soutenance.pptx");
 mkdirSync(dirname(out), { recursive: true });
