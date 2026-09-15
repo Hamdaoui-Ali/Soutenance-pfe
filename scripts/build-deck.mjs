@@ -414,11 +414,188 @@ function slide8() {
   note(slide, "Décrire la migration comme un workflow contrôlé, pas comme une suite de prompts. Faire le lien avec la suite : l'étape de réparation revient vers la validation et la revalidation.");
 }
 
+function slide9() {
+  const slide = pptx.addSlide();
+  heading(slide, 9, 3, "Réalisation", "Axe 1 — Java / Spring Boot", "Le parcours Java constitue la référence la plus mature de la plateforme.");
+  sectionLabel(slide, "Trajectoire de modernisation", 0.72, 2.25, 3.0, C.cyan);
+  const versions = [
+    ["2.1", "Legacy", C.amber],
+    ["2.7", "Stabiliser", C.blue],
+    ["3.5", "Moderniser", C.cyan],
+    ["4.0", "Cible", C.green],
+  ];
+  line(slide, 1.25, 3.35, 5.25, 0, C.surface3, 1.7);
+  versions.forEach(([v, label, color], i) => {
+    const x = 0.86 + i * 1.64;
+    dot(slide, x, 3.05, 0.56, C.surface, { lineColor: color, lineTransparency: 0, lineWidth: 1.5 });
+    dot(slide, x + 0.18, 3.23, 0.20, color, { line: false });
+    tx(slide, v, x - 0.05, 3.78, 0.66, 0.22, 14, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center" });
+    tx(slide, label, x - 0.28, 4.12, 1.12, 0.20, 8.5, color, { fontFace: FONT_MONO, align: "center", bold: true });
+    if (i < versions.length - 1) arrow(slide, x + 0.62, 3.33, x + 1.48, 3.33, C.surface3, 1.2);
+  });
+  pill(slide, "JAVA 11  →  17  →  21", 1.72, 4.76, 3.18, C.surface2, C.muted, { fontFace: FONT_MONO, fontSize: 9, h: 0.30 });
+  box(slide, 7.15, 2.42, 5.20, 3.18, C.surface, { round: true, line: false });
+  status(slide, "RÉALISÉ", 7.48, 2.74, "done", 1.03);
+  tx(slide, "Parcours de référence", 7.48, 3.12, 4.20, 0.30, 19, C.ink, { fontFace: FONT_HEAD, bold: true });
+  const items = [
+    [C.blue, "Maven", "résolution, build et dépendances"],
+    [C.cyan, "OpenRewrite", "transformations versionnées"],
+    [C.green, "Backend", "607 tests passés · 4 ignorés*"],
+  ];
+  items.forEach(([color, a, b], i) => {
+    const y = 3.70 + i * 0.46;
+    dot(slide, 7.52, y + 0.06, 0.12, color, { line: false });
+    tx(slide, a, 7.78, y, 1.22, 0.20, 10.5, C.ink, { fontFace: FONT_HEAD, bold: true });
+    tx(slide, b, 9.12, y + 0.01, 2.74, 0.18, 8.5, C.muted);
+  });
+  tx(slide, "* preuve ponctuelle, non benchmarkée", 7.48, 5.18, 3.90, 0.18, 8, C.subtle, { italic: true });
+  box(slide, 0.72, 5.72, 11.63, 0.70, C.surface2, { round: true, line: false });
+  tx(slide, "Le code est transformé par étapes ; chaque étape reste observable, testable et réversible.", 1.03, 5.95, 11.05, 0.22, 12.2, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center" });
+  note(slide, "Présenter Java/Spring Boot comme le parcours de référence le plus mature : Spring Boot 2.1 vers 2.7, 3.5 et 4.0, avec Java 11/17/21. Maven et OpenRewrite sont les briques de transformation. Les 607 tests passés et 4 ignorés restent une preuve à un instant donné.");
+}
+
+function slide10() {
+  const slide = pptx.addSlide();
+  heading(slide, 10, 3, "Réalisation", "Axe 2 — Angular", "Le modèle de gouvernance se transfère à Angular, avec une couverture volontairement présentée comme partielle.");
+  sectionLabel(slide, "Ligne de preuve", 0.72, 2.24, 2.0, C.cyan);
+  line(slide, 1.16, 3.36, 8.72, 0, C.surface3, 1.7);
+  const nodes = [
+    ["18", C.blue, "base"],
+    ["19", C.cyan, "scellée"],
+    ["20", C.green, "scellée"],
+    ["21", C.amber, "préparée"],
+  ];
+  nodes.forEach(([v, color, label], i) => {
+    const x = 1.04 + i * 2.72;
+    dot(slide, x, 3.04, 0.64, C.surface, { lineColor: color, lineTransparency: 0, lineWidth: 1.5 });
+    dot(slide, x + 0.22, 3.26, 0.20, color, { line: false });
+    tx(slide, v, x - 0.05, 3.85, 0.74, 0.22, 15, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center" });
+    tx(slide, label, x - 0.35, 4.20, 1.35, 0.20, 8.5, color, { fontFace: FONT_MONO, bold: true, align: "center" });
+    if (i < nodes.length - 1) {
+      arrow(slide, x + 0.70, 3.36, x + 2.52, 3.36, i < 2 ? C.green : C.amber, 1.3, i === 2 ? { dash: "dash" } : {});
+      if (i < 2) pill(slide, `${v} → ${nodes[i + 1][0]}`, x + 0.82, 2.62, 1.07, C.surface2, C.muted, { fontSize: 8.2, h: 0.24 });
+      else pill(slide, "non démarrée", x + 0.93, 2.62, 1.22, C.surface2, C.amber, { fontSize: 8.0, h: 0.24 });
+    }
+  });
+  box(slide, 0.72, 5.16, 8.82, 0.86, C.surface, { round: true, line: false });
+  status(slide, "PARTIEL", 1.04, 5.45, "partial", 0.92);
+  tx(slide, "18→19 et 19→20 scellées", 2.18, 5.32, 2.70, 0.22, 11, C.ink, { fontFace: FONT_HEAD, bold: true });
+  tx(slide, "20→21 préparée, mais non démarrée", 5.08, 5.34, 3.95, 0.20, 9.5, C.muted);
+  box(slide, 9.98, 2.52, 2.36, 3.50, C.surface2, { round: true, line: false });
+  sectionLabel(slide, "À retenir", 10.26, 2.85, 1.3, C.cyan);
+  tx(slide, "Pas de\n11 → 21\nréalisé", 10.26, 3.28, 1.78, 1.0, 20, C.ink, { fontFace: FONT_HEAD, bold: true, valign: "top" });
+  tx(slide, "Une extension visée, pas une preuve obtenue.", 10.26, 4.70, 1.76, 0.62, 9.2, C.muted, { valign: "top" });
+  note(slide, "Être très précis : Angular 18→19 et 19→20 sont scellées. 20→21 est préparée, mais non démarrée. Ne jamais annoncer une migration 11→21 comme réalisée.");
+}
+
+function slide11() {
+  const slide = pptx.addSlide();
+  heading(slide, 11, 3, "Réalisation", "Gouvernance et rôles des agents IA", "Les agents sont spécialisés et bornés ; les gates et l'humain gardent l'autorité finale.");
+  sectionLabel(slide, "Une équipe spécialisée", 0.72, 2.24, 2.5, C.cyan);
+  const agents = [
+    ["01", "Analyste", "diagnostiquer", C.blue],
+    ["02", "Reviewer", "relire", C.purple],
+    ["03", "Planificateur", "ordonner", C.cyan],
+    ["04", "Transformateur", "proposer", C.amber],
+    ["05", "Réparateur", "corriger", C.red],
+    ["06", "Assistant", "éclairer", C.green],
+  ];
+  agents.forEach(([n, t, b, color], i) => {
+    const col = i % 3;
+    const row = Math.floor(i / 3);
+    const x = 0.72 + col * 2.20;
+    const y = 2.68 + row * 1.06;
+    box(slide, x, y, 1.90, 0.78, C.surface, { round: true, lineColor: color, lineTransparency: 0, lineWidth: 1.0 });
+    tx(slide, n, x + 0.16, y + 0.16, 0.30, 0.16, 8, color, { fontFace: FONT_MONO, bold: true });
+    tx(slide, t, x + 0.54, y + 0.13, 1.18, 0.22, 11, C.ink, { fontFace: FONT_HEAD, bold: true });
+    tx(slide, b, x + 0.54, y + 0.44, 1.18, 0.16, 8.5, C.muted);
+  });
+  box(slide, 7.40, 2.66, 4.94, 2.92, C.surface3, { round: true, line: false });
+  status(slide, "GATE + HUMAIN", 7.72, 2.96, "blue", 1.35);
+  tx(slide, "Autorité bornée", 7.72, 3.40, 3.92, 0.28, 19, C.ink, { fontFace: FONT_HEAD, bold: true });
+  const controls = ["Aucun accès libre au terminal", "Actions soumises à un gate", "Décisions sensibles validées par l'humain"];
+  controls.forEach((t, i) => {
+    const y = 3.96 + i * 0.43;
+    dot(slide, 7.76, y + 0.06, 0.12, i === 2 ? C.cyan : C.green, { line: false });
+    tx(slide, t, 8.04, y, 3.72, 0.20, 9.8, C.ink, { bold: i === 2 });
+  });
+  box(slide, 0.72, 5.82, 11.62, 0.65, C.surface2, { round: true, line: false });
+  tx(slide, "Agents : propositions   |   Services : exécution contrôlée   |   Humain : décision sensible", 1.02, 6.04, 11.02, 0.20, 10.8, C.ink, { fontFace: FONT_MONO, align: "center", bold: true });
+  note(slide, "Présenter les rôles comme des responsabilités, pas comme des robots autonomes. Les agents analysent, planifient, transforment, réparent et assistent ; ils n'ont pas d'accès libre au terminal et ne remplacent pas la validation humaine.");
+}
+
+function slide12() {
+  const slide = pptx.addSlide();
+  heading(slide, 12, 3, "Réalisation", "Réparation gouvernée", "Un échec est gelé, contextualisé, proposé, décidé sous contrôle puis revalidé.");
+  sectionLabel(slide, "La boucle de réparation", 0.72, 2.24, 2.8, C.cyan);
+  const steps = [
+    ["01", "Échec\ngelé", C.red],
+    ["02", "Contexte\nréuni", C.blue],
+    ["03", "Proposition\nagent", C.purple],
+    ["04", "Review\nindépendante", C.amber],
+    ["05", "Décision\nhumaine", C.cyan],
+    ["06", "Apply\nisolé", C.green],
+    ["07", "Build / test\nrevalidé", C.green],
+  ];
+  steps.forEach(([n, title, color], i) => {
+    const x = 0.72 + i * 1.70;
+    box(slide, x, 2.80, 1.42, 1.42, i === 4 ? C.surface3 : C.surface, { round: true, lineColor: color, lineTransparency: 0, lineWidth: 1.0 });
+    dot(slide, x + 0.17, 3.02, 0.25, color, { line: false });
+    tx(slide, n, x + 0.17, 3.08, 0.25, 0.12, 7, C.navyText, { fontFace: FONT_MONO, bold: true, align: "center" });
+    tx(slide, title, x + 0.16, 3.50, 1.10, 0.42, 10.7, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center", valign: "top" });
+    if (i < steps.length - 1) arrow(slide, x + 1.45, 3.50, x + 1.64, 3.50, C.surface3, 1.0);
+  });
+  box(slide, 0.72, 4.86, 11.64, 0.82, C.surface2, { round: true, line: false });
+  const proof = [
+    ["checksum", "décider sur le bon artefact"],
+    ["bornage", "limiter les tentatives"],
+    ["historique", "conserver chaque décision"],
+  ];
+  proof.forEach(([a, b], i) => {
+    const x = 1.00 + i * 3.78;
+    pill(slide, a, x, 5.12, 1.12, i === 0 ? C.cyan : C.surface, i === 0 ? C.navyText : C.ink, { fontFace: FONT_MONO, fontSize: 8.5, h: 0.28 });
+    tx(slide, b, x + 1.30, 5.14, 2.20, 0.18, 8.7, C.muted);
+  });
+  tx(slide, "La réparation n'est pas un retry aveugle : c'est une décision prouvée.", 1.20, 6.24, 10.92, 0.26, 13, C.ink, { fontFace: FONT_HEAD, bold: true, align: "center" });
+  note(slide, "Décrire la boucle comme un contrôle de changement : gel de l'échec, collecte du contexte, proposition, review, décision humaine, application isolée, puis build/test et revalidation. Insister sur checksum, tentatives bornées et historique.");
+}
+
+function slide13() {
+  const slide = pptx.addSlide();
+  heading(slide, 13, 4, "Démo", "Démo : scénario utilisateur", "Démo locale — scénario anonymisé, états préparés. L'utilisateur décide à partir d'une preuve.");
+  const screenshot = resolve(process.env.DECK_ANGULAR_SCREENSHOT ?? "assets/presentation/angular-g10-repair.png");
+  box(slide, 0.72, 2.34, 7.12, 3.98, C.surface, { round: true, line: false });
+  pill(slide, "DÉMO LOCALE  ·  ANGULAR G10  ·  ÉTAT PRÉPARÉ", 0.98, 2.58, 4.20, C.cyan, C.navyText, { fontFace: FONT_MONO, fontSize: 8.2, h: 0.28 });
+  if (existsSync(screenshot)) {
+    slide.addImage({ path: screenshot, x: 0.98, y: 2.98, w: 6.60, h: 3.12 });
+  } else {
+    box(slide, 0.98, 2.98, 6.60, 3.12, C.surface2, { round: true, line: false });
+    tx(slide, "Capture de démonstration introuvable", 1.20, 4.35, 6.12, 0.28, 14, C.red, { align: "center", bold: true });
+  }
+  const actions = [
+    ["01", "Inspecter", "Lire la correction proposée et son contexte.", C.blue],
+    ["02", "Vérifier", "Relier la proposition à la preuve affichée.", C.cyan],
+    ["03", "Décider", "Approuver, modifier ou rejeter.", C.green],
+  ];
+  actions.forEach(([n, title, body, color], i) => {
+    const y = 2.56 + i * 1.06;
+    box(slide, 8.28, y, 4.04, 0.82, C.surface, { round: true, line: false });
+    dot(slide, 8.52, y + 0.23, 0.30, color, { line: false });
+    tx(slide, n, 8.52, y + 0.31, 0.30, 0.12, 7, C.navyText, { fontFace: FONT_MONO, bold: true, align: "center" });
+    tx(slide, title, 8.98, y + 0.13, 1.58, 0.22, 11.5, C.ink, { fontFace: FONT_HEAD, bold: true });
+    tx(slide, body, 8.98, y + 0.43, 2.94, 0.22, 8.7, C.muted, { valign: "top" });
+  });
+  box(slide, 8.28, 5.76, 4.04, 0.56, C.surface2, { round: true, line: false });
+  tx(slide, "Même logique sur le parcours Java.", 8.54, 5.94, 3.54, 0.18, 9.5, C.muted, { fontFace: FONT_MONO, align: "center" });
+  tx(slide, "Interface locale, déterministe et anonymisée — pas d'accès CGI/Azure.", 0.74, 6.56, 7.40, 0.18, 8.4, C.subtle, { italic: true });
+  note(slide, "Faire la démo autour d'une seule décision : inspecter la correction Angular G10, vérifier la preuve, puis approuver/modifier/rejeter. Préciser que l'interface est locale, déterministe, anonymisée et basée sur des états préparés. Le projet réel CGI et les environnements Azure ne sont pas exposés.");
+}
+
 function placeholders() {
-  // Replaced by the realization, demo, evidence and conclusion parts.
-  for (let i = 9; i <= 18; i++) {
+  // Replaced by the evidence and conclusion parts.
+  for (let i = 14; i <= 18; i++) {
     const slide = pptx.addSlide();
-    heading(slide, i, Math.min(6, Math.floor((i - 3) / 3)), "À compléter", `Slide ${i}`, "Contenu éditable ajouté dans les commits suivants.");
+    heading(slide, i, i < 17 ? 5 : 6, "À compléter", `Slide ${i}`, "Contenu éditable ajouté dans les commits suivants.");
     card(slide, 0.72, 2.45, 11.6, 2.0, "Placeholder", "Cette page est volontairement remplacée dans la suite de la production.", { accent: C.cyan });
   }
 }
@@ -431,6 +608,11 @@ slide5();
 slide6();
 slide7();
 slide8();
+slide9();
+slide10();
+slide11();
+slide12();
+slide13();
 placeholders();
 
 const out = resolve(process.env.DECK_OUTPUT ?? "dist/Agentic-Migration-Platform-Soutenance.pptx");
