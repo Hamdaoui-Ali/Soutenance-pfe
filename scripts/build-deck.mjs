@@ -687,6 +687,7 @@ function slide17() {
 function slide18() {
   const slide = pptx.addSlide();
   slide.background = { color: C.bg };
+  progress(slide, 6);
   line(slide, 0.66, 0.62, 0.56, 0, C.cyan, 2.2);
   tx(slide, "ÉCHANGE", 1.35, 0.50, 1.8, 0.22, 9, C.cyan, { fontFace: FONT_MONO, bold: true, charSpacing: 1.3 });
   tx(slide, "Questions / Discussion", 0.66, 1.38, 8.7, 0.66, 34, C.ink, { fontFace: FONT_HEAD, bold: true });
@@ -697,7 +698,7 @@ function slide18() {
     ["EVIDENCE", C.green, 7.48, 4.46],
   ];
   line(slide, 7.52, 1.92, 2.58, 2.92, C.surface3, 1.2, { dash: "dash" });
-  line(slide, 7.82, 4.70, 2.12, -2.80, C.surface3, 1.2, { dash: "dash" });
+  line(slide, 7.82, 1.90, 2.12, 2.80, C.surface3, 1.2, { dash: "dash" });
   words.forEach(([label, color, x, y]) => {
     dot(slide, x, y, 0.76, C.surface, { lineColor: color, lineTransparency: 0, lineWidth: 1.5 });
     dot(slide, x + 0.27, y + 0.27, 0.22, color, { line: false });
