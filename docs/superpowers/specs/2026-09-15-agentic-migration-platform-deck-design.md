@@ -8,7 +8,9 @@
 
 Créer une présentation de soutenance universitaire professionnelle qui explique la logique générale d'une plateforme agentique de migration logicielle, sans exposer le projet CGI confidentiel ni inventer des résultats.
 
-Le récit doit être compréhensible par un jury mixte. Il commence par la difficulté de coordination d'une migration legacy, présente les frontières entre agents IA, services déterministes et humain, puis montre les deux chaînes techniques Java/Spring Boot et Angular, une réparation gouvernée et les preuves disponibles.
+Le récit doit être compréhensible par un jury mixte. Il commence par le déclencheur métier et opérationnel d'une migration cloud à grande échelle, transforme cette histoire en problématique de coordination d'une migration legacy, présente les frontières entre agents IA, services déterministes et humain, puis montre les deux chaînes techniques Java/Spring Boot et Angular, une réparation gouvernée et les preuves disponibles.
+
+L'ouverture doit commencer par une histoire de besoin avant de nommer la problématique : un grand client aérien de CGI vise une migration cloud à grande échelle ; les équipes migrent progressivement un portefeuille legacy tout en maintenant la production ; les prompts et pratiques individuelles ne suffisent plus ; la demande s'élargit ; la réflexion aboutit à une Migration Factory multi-agents.
 
 ## 2. Décisions de design
 
@@ -27,15 +29,15 @@ Les deux axes techniques, la gouvernance, les agents IA, la réparation, la dém
 |---:|---|---|
 | 1 | Agentic Migration Platform | — |
 | 2 | Plan de présentation | — |
-| 3 | Contexte et limites de la migration manuelle | Contexte |
-| 4 | Objectifs du projet | Contexte |
-| 5 | Vision et architecture fonctionnelle | Solution |
-| 6 | Architecture technique | Architecture |
-| 7 | Workflow complet de migration | Architecture |
-| 8 | Axe 1 — Java / Spring Boot | Réalisation |
-| 9 | Axe 2 — Angular | Réalisation |
-| 10 | Gouvernance : gates, validation humaine et traçabilité | Réalisation |
-| 11 | Agents IA : rôles et limites | Réalisation |
+| 3 | Le déclencheur : une migration cloud à grande échelle | Contexte |
+| 4 | La réalité opérationnelle : maintenir et migrer en parallèle | Contexte |
+| 5 | Du besoin à la Migration Factory : objectifs et vision | Solution |
+| 6 | Architecture fonctionnelle | Architecture |
+| 7 | Architecture technique | Architecture |
+| 8 | Workflow complet de migration | Architecture |
+| 9 | Axe 1 — Java / Spring Boot | Réalisation |
+| 10 | Axe 2 — Angular | Réalisation |
+| 11 | Gouvernance et rôles des agents IA | Réalisation |
 | 12 | Réparation gouvernée | Réalisation |
 | 13 | Démo : scénario utilisateur | Démo |
 | 14 | Résultats et preuves | Résultats |
@@ -67,9 +69,13 @@ La palette, les tailles, la grille, les règles de diagrammes, d'icônes et de c
 ### 3.1 Dépendances entre les idées
 
 ```text
-Problème de coordination
+Déclencheur : migration cloud à grande échelle
         ↓
-Objectifs et frontières de responsabilité
+Maintenir la production et migrer en parallèle
+        ↓
+Problème de coordination, de contexte et de preuves
+        ↓
+Objectifs, vision et frontières de responsabilité
         ↓
 Architecture fonctionnelle et technique
         ↓
@@ -82,13 +88,33 @@ Démo et preuves disponibles
 Limites, perspectives et principe final
 ```
 
-La présentation ne doit pas introduire l'IA comme point de départ. La nécessité des agents devient évidente seulement après avoir montré la fragmentation de la migration manuelle et la nécessité de conserver une autorité déterministe.
+La présentation ne doit pas introduire l'IA comme point de départ. La nécessité des agents devient évidente seulement après avoir montré le portefeuille legacy, la continuité de service exigée, la fragmentation de la migration manuelle et l'échec du passage à l'échelle des prompts individuels.
 
-### 3.2 Principe central à répéter
+### 3.2 Scénario d'ouverture
+
+La slide 3 doit faire comprendre en quelques secondes :
+
+1. un grand client aérien de CGI veut progresser vers le cloud à horizon 2027 ;
+2. le portefeuille legacy doit être traité progressivement, application ou microservice par application ;
+3. les équipes doivent en même temps optimiser, maintenir et dépanner les applications en production ;
+4. la migration doit rester invisible pour le client : disponibilité et fonctionnalité ne doivent pas se dégrader ;
+5. les pratiques et prompts générés pour aider les développeurs ne suffisent plus lorsque la demande augmente.
+
+Le visuel suit la chaîne :
+
+`Objectif Cloud → Applications legacy → Équipes sous tension → Migration manuelle → Besoin d'industrialisation`
+
+La slide 4 transforme cette histoire en problématique d'ingénierie. La slide 5 montre la réponse conceptuelle :
+
+`Prompts individuels → Standardisation → Factory multi-agents`
+
+La slide 5 doit séparer clairement le périmètre démontré — Java/Spring Boot et Angular — de la vision cible — .NET, PHP, Python, React, on-premise → cloud, cloud → cloud et refactoring.
+
+### 3.3 Principe central à répéter
 
 > Les agents proposent et raisonnent ; les services déterministes exécutent et vérifient ; l'humain autorise les changements sensibles.
 
-Ce principe doit apparaître implicitement dans les slides 5, 10, 11, 12 et explicitement dans la conclusion.
+Ce principe doit apparaître implicitement dans les slides 5, 6, 10, 11, 12 et explicitement dans la conclusion.
 
 ## 4. Matrice de vérité et de preuve
 
@@ -116,7 +142,11 @@ Chaque chiffre ou statut affiché doit être relié à une page du rapport ou à
 
 Le rapport est une source de contenu et de preuves, pas un modèle graphique à recopier. Les pages denses sont résumées en schémas ou matrices courtes.
 
-### 5.2 Dépôt démo
+### 5.2 Contexte narratif fourni pour la soutenance
+
+Le contexte opérationnel de l'ouverture est fourni par le porteur du projet et doit être traité comme une information de cadrage à présenter avec prudence. Sur les slides, utiliser par défaut les formulations **« un grand client aérien »** et **« d'autres grands comptes »**. Les noms de clients, la date précise de la cible cloud et tout détail permettant d'identifier le programme restent dans les notes uniquement après autorisation explicite.
+
+### 5.3 Dépôt démo
 
 Les notes du présentateur peuvent référencer :
 
@@ -210,4 +240,3 @@ Les fichiers temporaires d'audit et de rendu ne doivent jamais être inclus dans
 - Présenter comme livrée une fonctionnalité seulement planifiée.
 - Publier le deck ou l'envoyer à un tiers sans instruction distincte.
 - Ajouter des annexes au-delà de 18 slides sans accord explicite.
-
