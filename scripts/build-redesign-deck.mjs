@@ -486,7 +486,18 @@ function slide11() {
     ["Assistant", "éclairer", 8.44, 5.08, C.mint],
   ];
   agentNodes.forEach(([label, verb, x, y, color]) => {
-    rule(slide, x + 0.42, y + 0.42, center.x + 0.51 - (x + 0.42), center.y + 0.51 - (y + 0.42), C.steelLight, 1.0);
+    const sourceX = x + 0.42;
+    const sourceY = y + 0.42;
+    const targetX = center.x + 0.51;
+    const targetY = center.y + 0.51;
+    const dx = targetX - sourceX;
+    const dy = targetY - sourceY;
+    const distance = Math.hypot(dx, dy);
+    const startX = sourceX + (dx / distance) * 0.44;
+    const startY = sourceY + (dy / distance) * 0.44;
+    const endX = targetX - (dx / distance) * 0.58;
+    const endY = targetY - (dy / distance) * 0.58;
+    rule(slide, startX, startY, endX - startX, endY - startY, C.steelLight, 1.0);
     dot(slide, x, y, 0.84, C.graphite, { lineColor: color, lineTransparency: 0, lineWidth: 1.4 });
     dot(slide, x + 0.30, y + 0.30, 0.24, color, { line: false });
     tx(slide, label, x - 0.34, y + 0.98, 1.52, 0.20, 10.6, C.snow, { fontFace: FONTS.head, bold: true, align: "center" });
@@ -496,12 +507,12 @@ function slide11() {
   mono(slide, "HUMAIN", 11.50, 3.04, 0.64, 0.16, 7.3, C.amber, { align: "center", charSpacing: 0.55 });
   tx(slide, "gate", 11.50, 3.52, 0.64, 0.22, 15, C.snow, { fontFace: FONTS.head, bold: true, align: "center" });
   tx(slide, "autorise\nles décisions\nsensibles", 11.50, 4.00, 0.64, 0.58, 8.6, C.mist, { align: "center", valign: "top" });
-  rule(slide, 11.36, 4.30, -0.82, -0.14, C.amber, 1.1, { endArrowType: "triangle" });
+  rule(slide, 11.36, 3.30, -0.52, 0.0, C.amber, 1.1, { endArrowType: "triangle" });
   rule(slide, 0.84, 6.10, 11.50, 0, C.steel, 0.8);
   mono(slide, "AGENTS", 0.84, 6.34, 0.92, 0.16, 7.8, C.cyan, { charSpacing: 0.8 });
-  tx(slide, "artefacts / propositions", 2.04, 6.30, 2.20, 0.20, 10.2, C.snow, { fontFace: FONTS.head, bold: true });
+  tx(slide, "artefacts", 2.04, 6.30, 1.12, 0.20, 10.2, C.snow, { fontFace: FONTS.head, bold: true });
   mono(slide, "FRONTIÈRE", 5.12, 6.34, 1.10, 0.16, 7.8, C.amber, { charSpacing: 0.8 });
-  tx(slide, "aucun accès libre au terminal", 6.54, 6.30, 2.56, 0.20, 10.2, C.snow, { fontFace: FONTS.head, bold: true });
+  tx(slide, "terminal borné", 6.54, 6.30, 1.42, 0.20, 10.2, C.snow, { fontFace: FONTS.head, bold: true });
   mono(slide, "HUMAIN", 9.98, 6.34, 0.92, 0.16, 7.8, C.mint, { charSpacing: 0.8 });
   tx(slide, "décision finale", 11.10, 6.30, 1.24, 0.20, 9.8, C.snow, { fontFace: FONTS.head, bold: true, align: "right" });
   note(slide, 11);
@@ -521,7 +532,7 @@ function slide12() {
   rect(slide, 5.30, 4.46, 2.72, 0.96, C.amber, { line: false });
   mono(slide, "GATE", 5.58, 4.70, 0.70, 0.16, 7.8, C.ink, { charSpacing: 0.8 });
   tx(slide, "DÉCISION HUMAINE", 6.48, 4.64, 1.20, 0.22, 11.4, C.ink, { fontFace: FONTS.head, bold: true, align: "center" });
-  arrow(slide, 8.16, 3.48, 9.20, 3.48, C.amber, 1.3);
+  arrow(slide, 8.94, 3.48, 9.20, 3.48, C.amber, 1.3);
   rect(slide, 9.24, 3.02, 1.52, 0.92, C.slate, { lineColor: C.blue, lineTransparency: 0, lineWidth: 1.0 });
   mono(slide, "05", 9.42, 3.20, 0.26, 0.16, 7.4, C.blue, { charSpacing: 0.2 });
   tx(slide, "Apply\nisolé", 9.78, 3.18, 0.72, 0.42, 11.0, C.snow, { fontFace: FONTS.head, bold: true, valign: "top" });
@@ -529,9 +540,9 @@ function slide12() {
   rect(slide, 11.38, 3.02, 1.00, 0.92, C.slate, { lineColor: C.mint, lineTransparency: 0, lineWidth: 1.0 });
   mono(slide, "06", 11.52, 3.20, 0.26, 0.16, 7.4, C.mint, { charSpacing: 0.2 });
   tx(slide, "Build\nTest", 11.84, 3.18, 0.40, 0.42, 10.0, C.snow, { fontFace: FONTS.head, bold: true, valign: "top" });
-  rule(slide, 11.88, 4.02, 0, 0.72, C.mint, 1.1, { endArrowType: "triangle" });
-  rule(slide, 11.88, 4.74, -8.62, 0.0, C.mint, 1.1, { endArrowType: "triangle" });
-  mono(slide, "REVALIDATION", 8.94, 5.00, 1.40, 0.18, 7.8, C.mint, { charSpacing: 0.7 });
+  rule(slide, 11.88, 4.02, 0, 1.24, C.mint, 1.1, { endArrowType: "triangle" });
+  rule(slide, 11.88, 5.42, -3.20, 0.0, C.mint, 1.1, { endArrowType: "triangle" });
+  mono(slide, "REVALIDATION", 8.94, 5.12, 1.40, 0.18, 7.8, C.mint, { charSpacing: 0.7 });
   rule(slide, 5.28, 5.58, 2.76, 0, C.steel, 0.8, { dash: "dash" });
   mono(slide, "CHECKSUM", 1.04, 5.92, 1.10, 0.17, 7.7, C.cyan, { charSpacing: 0.8 });
   tx(slide, "décider sur le bon artefact", 2.36, 5.88, 2.28, 0.20, 9.6, C.mist, { fontFace: FONTS.head, bold: true });
@@ -540,6 +551,173 @@ function slide12() {
   mono(slide, "HISTORIQUE", 8.56, 5.92, 1.14, 0.17, 7.7, C.mint, { charSpacing: 0.8 });
   tx(slide, "conserver la décision", 9.94, 5.88, 2.24, 0.20, 9.6, C.mist, { fontFace: FONTS.head, bold: true });
   note(slide, 12);
+}
+
+function slide13() {
+  const slide = pptx.addSlide();
+  heading(slide, 13, 4, "Démo", "Démo : décider à partir d'une preuve", "Interface locale — scénario anonymisé, états préparés. Une décision, trois gestes.", { titleW: 10.40 });
+  const screenshot = resolve(process.env.DECK_ANGULAR_SCREENSHOT ?? "assets/presentation/angular-g10-repair.png");
+  rect(slide, 0.76, 2.28, 7.18, 4.64, C.slate2, { lineColor: C.cyan, lineTransparency: 0, lineWidth: 1.0 });
+  if (existsSync(screenshot)) {
+    slide.addImage({ path: screenshot, x: 0.84, y: 2.42, w: 7.02, h: 4.39 });
+  } else {
+    rect(slide, 0.84, 2.42, 7.02, 4.39, C.slate, { lineColor: C.coral, lineTransparency: 0, lineWidth: 1.0 });
+    tx(slide, "Capture de démonstration introuvable", 1.20, 4.42, 6.30, 0.28, 15, C.coral, { align: "center", bold: true });
+  }
+  const actions = [
+    ["01", "INSPECTER", "Lire la correction et son contexte.", C.blue],
+    ["02", "VÉRIFIER", "Relier la proposition à la preuve.", C.cyan],
+    ["03", "DÉCIDER", "Approuver, modifier ou rejeter.", C.amber],
+  ];
+  actions.forEach(([number, label, body, color], i) => {
+    const y = 2.74 + i * 1.12;
+    dot(slide, 8.56, y + 0.03, 0.34, color, { line: false });
+    mono(slide, number, 8.64, y + 0.14, 0.18, 0.10, 6.6, C.ink, { charSpacing: 0.0, align: "center" });
+    mono(slide, label, 9.12, y, 2.20, 0.18, 8.3, color, { charSpacing: 0.85 });
+    tx(slide, body, 9.12, y + 0.28, 2.86, 0.38, 11.0, C.snow, { fontFace: FONTS.head, bold: true, valign: "top" });
+    rule(slide, 9.12, y + 0.84, 2.86, 0, C.steel, 0.8, { transparency: 20 });
+  });
+  mono(slide, "ANGULAR G10 · ÉTAT PRÉPARÉ", 8.54, 6.26, 3.34, 0.18, 7.8, C.mist, { charSpacing: 0.78 });
+  note(slide, 13);
+}
+
+function slide14() {
+  const slide = pptx.addSlide();
+  heading(slide, 14, 5, "Résultats", "Les preuves disponibles", "Des observations ponctuelles de contrôle et de revalidation — pas un benchmark global.", { light: true });
+  mono(slide, "POINT-IN-TIME EVIDENCE", 0.80, 2.24, 2.62, 0.18, 8.2, C.ink, { charSpacing: 1.15 });
+  rule(slide, 0.82, 2.62, 11.52, 0, C.steelLight, 0.8, { transparency: 20 });
+
+  tx(slide, "607", 0.86, 2.98, 2.30, 0.82, 62, C.ink, { fontFace: FONTS.head, bold: true, valign: "top" });
+  mono(slide, "BACKEND", 0.90, 3.94, 1.20, 0.18, 8.0, C.blue, { charSpacing: 1.0 });
+  tx(slide, "tests réussis", 2.26, 3.92, 2.10, 0.22, 12.2, C.ink, { fontFace: FONTS.head, bold: true });
+  tx(slide, "+ 4 ignorés", 0.90, 4.38, 2.20, 0.22, 10.4, C.steelLight, { fontFace: FONTS.mono, bold: true });
+
+  rule(slide, 4.74, 2.94, 0, 2.30, C.steelLight, 0.8, { transparency: 25 });
+  tx(slide, "12 → 11", 5.16, 2.98, 3.16, 0.82, 52, C.ink, { fontFace: FONTS.head, bold: true, valign: "top" });
+  mono(slide, "FRONTEND BASELINE", 5.20, 3.94, 2.10, 0.18, 8.0, C.cyan, { charSpacing: 0.95 });
+  tx(slide, "échecs après intégration", 5.20, 4.36, 2.72, 0.22, 11.3, C.ink, { fontFace: FONTS.head, bold: true });
+  tx(slide, "observation ponctuelle", 5.20, 4.78, 2.36, 0.20, 9.4, C.steelLight, { italic: true });
+
+  rule(slide, 9.04, 2.94, 0, 2.30, C.steelLight, 0.8, { transparency: 25 });
+  mono(slide, "FRONTEND", 9.42, 3.06, 1.42, 0.18, 8.0, C.mint, { charSpacing: 1.0 });
+  tx(slide, "type", 9.42, 3.54, 1.32, 0.24, 14, C.ink, { fontFace: FONTS.mono, bold: true });
+  tx(slide, "conformité", 9.42, 3.94, 1.62, 0.24, 14, C.ink, { fontFace: FONTS.mono, bold: true });
+  tx(slide, "build", 9.42, 4.34, 1.32, 0.24, 14, C.ink, { fontFace: FONTS.mono, bold: true });
+  [3.12, 3.52, 3.92].forEach((y) => dot(slide, 11.60, y, 0.14, C.mint, { line: false }));
+  mono(slide, "VALIDÉS", 9.42, 4.78, 1.16, 0.18, 7.8, C.mint, { charSpacing: 0.85 });
+
+  rule(slide, 0.84, 5.80, 11.48, 0, C.steelLight, 0.8, { transparency: 15 });
+  mono(slide, "ANGULAR", 0.86, 6.12, 1.02, 0.18, 7.8, C.ink, { charSpacing: 0.85 });
+  tx(slide, "18 → 19", 2.20, 6.08, 1.10, 0.22, 11.0, C.ink, { fontFace: FONTS.mono, bold: true });
+  mono(slide, "SCELLÉE", 3.52, 6.12, 0.84, 0.18, 7.8, C.mint, { charSpacing: 0.72 });
+  tx(slide, "19 → 20", 5.06, 6.08, 1.10, 0.22, 11.0, C.ink, { fontFace: FONTS.mono, bold: true });
+  mono(slide, "SCELLÉE", 6.38, 6.12, 0.84, 0.18, 7.8, C.mint, { charSpacing: 0.72 });
+  tx(slide, "20 → 21", 7.92, 6.08, 1.10, 0.22, 11.0, C.ink, { fontFace: FONTS.mono, bold: true });
+  mono(slide, "PRÉPARÉE", 9.24, 6.12, 0.96, 0.18, 7.8, C.amber, { charSpacing: 0.72 });
+  tx(slide, "non démarrée", 10.58, 6.08, 1.42, 0.22, 9.8, C.steelLight, { fontFace: FONTS.head, bold: true, align: "right" });
+  note(slide, 14);
+}
+
+function slide15() {
+  const slide = pptx.addSlide();
+  heading(slide, 15, 5, "Résultats", "Les difficultés ont renforcé l'architecture", "Chaque friction a produit un contrat plus explicite pour transformer, exécuter ou persister.", { light: true });
+  mono(slide, "FRICTION OBSERVÉE", 0.84, 2.30, 2.26, 0.18, 8.2, C.coral, { charSpacing: 1.0 });
+  mono(slide, "INVARIANT AJOUTÉ", 6.08, 2.30, 2.18, 0.18, 8.2, C.blue, { charSpacing: 1.0 });
+  rule(slide, 0.84, 2.68, 11.50, 0, C.steelLight, 0.8, { transparency: 20 });
+  const rows = [
+    ["Patch non applicable", "Diff structuré + validation", C.coral, C.blue],
+    ["Autorité de commande ambiguë", "Manifeste backend", C.amber, C.cyan],
+    ["Profil Angular incompatible", "Catalogue versionné", C.amber, C.blue],
+    ["Cohérence SQLite", "Base autoritaire réconciliée", C.coral, C.mint],
+  ];
+  rows.forEach(([problem, response, leftColor, rightColor], i) => {
+    const y = 2.98 + i * 0.72;
+    rect(slide, 0.84, y, 4.48, 0.52, i % 2 === 0 ? "E9E7E1" : "E2E0DA", { line: false });
+    dot(slide, 1.08, y + 0.19, 0.14, leftColor, { line: false });
+    tx(slide, problem, 1.46, y + 0.13, 3.48, 0.20, 10.8, C.ink, { fontFace: FONTS.head, bold: true });
+    rule(slide, 5.54, y + 0.26, 0.34, 0, C.steelLight, 1.0, { endArrowType: "triangle" });
+    rect(slide, 6.08, y, 5.70, 0.52, i % 2 === 0 ? "E2F0EC" : "E5EDF1", { line: false });
+    dot(slide, 6.34, y + 0.19, 0.14, rightColor, { line: false });
+    tx(slide, response, 6.72, y + 0.13, 4.60, 0.20, 10.8, C.ink, { fontFace: FONTS.head, bold: true });
+  });
+  rule(slide, 0.84, 6.10, 11.50, 0, C.steelLight, 0.8, { transparency: 18 });
+  mono(slide, "ARCHITECTURE", 0.84, 6.38, 1.38, 0.18, 7.8, C.ink, { charSpacing: 0.8 });
+  tx(slide, "contrats", 2.52, 6.34, 1.08, 0.22, 11.0, C.ink, { fontFace: FONTS.mono, bold: true });
+  tx(slide, "orchestration", 4.24, 6.34, 1.56, 0.22, 11.0, C.ink, { fontFace: FONTS.mono, bold: true });
+  tx(slide, "testing", 6.42, 6.34, 0.92, 0.22, 11.0, C.ink, { fontFace: FONTS.mono, bold: true });
+  tx(slide, "persistance", 8.08, 6.34, 1.28, 0.22, 11.0, C.ink, { fontFace: FONTS.mono, bold: true });
+  tx(slide, "compétences mobilisées", 10.14, 6.34, 2.20, 0.22, 10.0, C.steelLight, { fontFace: FONTS.head, bold: true, align: "right" });
+  note(slide, 15);
+}
+
+function slide16() {
+  const slide = pptx.addSlide();
+  heading(slide, 16, 5, "Résultats", "Industrialiser reste le prochain chantier", "Le prototype est gouverné ; il ne se présente pas encore comme une plateforme production complète.", { light: true });
+  mono(slide, "NOW → NEXT", 0.82, 2.26, 1.32, 0.18, 8.2, C.ink, { charSpacing: 1.0 });
+  rule(slide, 0.84, 3.42, 10.98, -0.72, C.steelLight, 1.0, { endArrowType: "triangle" });
+  dot(slide, 1.04, 3.25, 0.34, C.amber, { line: false });
+  dot(slide, 11.48, 2.54, 0.34, C.blue, { line: false });
+  mono(slide, "AUJOURD'HUI", 0.84, 2.74, 1.72, 0.18, 8.0, C.amber, { charSpacing: 0.9 });
+  tx(slide, "Prototype gouverné", 0.84, 3.76, 3.44, 0.30, 20, C.ink, { fontFace: FONTS.head, bold: true });
+  const limits = ["authentification / rôles non livrés", "pas de benchmark manuel contrôlé", "pas de CI commune", "couverture Angular incomplète", "coûts / durées LLM non consolidés"];
+  limits.forEach((item, i) => {
+    const y = 4.34 + i * 0.32;
+    dot(slide, 0.88, y + 0.06, 0.10, C.amber, { line: false });
+    tx(slide, item, 1.14, y, 4.22, 0.18, 9.6, C.ink, { fontFace: FONTS.head, bold: i === 0 });
+  });
+  mono(slide, "ENSUITE", 8.58, 2.08, 1.10, 0.18, 8.0, C.blue, { charSpacing: 0.9 });
+  tx(slide, "Industrialiser", 8.58, 2.46, 3.46, 0.30, 20, C.ink, { fontFace: FONTS.head, bold: true });
+  const next = ["sécurité et rôles", "corpus de benchmark", "instrumentation coût / durée", "nouveaux écosystèmes et modes de migration"];
+  next.forEach((item, i) => {
+    const y = 3.06 + i * 0.44;
+    dot(slide, 8.62, y + 0.06, 0.10, C.blue, { line: false });
+    tx(slide, item, 8.88, y, 3.44, 0.20, 10.2, C.ink, { fontFace: FONTS.head, bold: i === 0 });
+  });
+  rule(slide, 8.58, 4.96, 3.70, 0, C.blue, 1.4, { dash: "dash" });
+  mono(slide, "VISION CIBLE", 8.58, 5.22, 1.42, 0.18, 7.8, C.blue, { charSpacing: 0.8 });
+  tx(slide, ".NET · PHP · Python · React · cloud · refactoring", 8.58, 5.56, 3.64, 0.38, 9.6, C.steelLight, { fontFace: FONTS.mono, bold: true, valign: "top" });
+  note(slide, 16);
+}
+
+function slide17() {
+  const slide = pptx.addSlide();
+  heading(slide, 17, 6, "Conclusion", "Le principe d'architecture", "La contribution est une automatisation gouvernée, traçable et revalidable.");
+  tx(slide, "La migration devient gouvernable\nquand la décision laisse une preuve.", 0.84, 2.50, 7.60, 0.94, 28, C.snow, { fontFace: FONTS.head, bold: true, valign: "top" });
+  rule(slide, 0.86, 3.82, 6.92, 0, C.cyan, 2.0);
+  tx(slide, "Les agents accélèrent le raisonnement ; ils ne remplacent pas l'autorité.", 0.86, 4.10, 6.90, 0.32, 12.2, C.mist, { fontFace: FONTS.head, bold: true, valign: "top" });
+
+  const pillars = [["01", "RAISONNER", "agents\nproposent", C.cyan], ["02", "CONTRÔLER", "services\nexécutent", C.blue], ["03", "PROUVER", "humain\ndécide", C.amber]];
+  const xs = [8.42, 9.88, 11.34];
+  rule(slide, 8.72, 3.52, 2.88, 0, C.steelLight, 1.0);
+  pillars.forEach(([number, label, sub, color], i) => {
+    const x = xs[i];
+    dot(slide, x, 3.22, 0.62, C.slate2, { lineColor: color, lineTransparency: 0, lineWidth: 1.5 });
+    mono(slide, number, x + 0.18, 3.45, 0.26, 0.10, 6.8, color, { align: "center", charSpacing: 0.0 });
+    mono(slide, label, x - 0.34, 4.12, 1.28, 0.18, 7.6, color, { align: "center", charSpacing: 0.65 });
+    tx(slide, sub, x - 0.34, 4.48, 1.28, 0.42, 10.5, C.snow, { fontFace: FONTS.head, bold: true, align: "center", valign: "top" });
+  });
+  mono(slide, "AGENTIC MIGRATION PLATFORM", 0.86, 6.38, 3.40, 0.18, 7.8, C.steelLight, { charSpacing: 1.0 });
+  mono(slide, "REASONING · CONTROL · EVIDENCE", 8.34, 6.38, 3.92, 0.18, 7.8, C.cyan, { align: "right", charSpacing: 0.85 });
+  note(slide, 17);
+}
+
+function slide18() {
+  const slide = pptx.addSlide();
+  base(slide, 18, 6);
+  rule(slide, 0.72, 0.68, 0.60, 0, C.cyan, 2.2);
+  mono(slide, "ÉCHANGE", 1.48, 0.56, 1.80, 0.20, 9.0, C.cyan, { charSpacing: 1.25 });
+  tx(slide, "Questions / Discussion", 0.72, 1.44, 8.80, 0.64, 38, C.snow, { fontFace: FONTS.head, bold: true });
+  tx(slide, "Choix d'architecture · preuves disponibles · limites assumées", 0.76, 2.34, 7.92, 0.26, 14, C.mist, { fontFace: FONTS.head, valign: "top" });
+  rule(slide, 0.78, 3.28, 5.82, 0, C.steel, 1.0, { transparency: 15 });
+  mono(slide, "LE SYSTÈME", 0.78, 3.58, 1.30, 0.18, 8.0, C.mist, { charSpacing: 0.9 });
+  tx(slide, "raisonne", 0.78, 4.02, 1.56, 0.26, 18, C.cyan, { fontFace: FONTS.head, bold: true });
+  tx(slide, "contrôle", 2.70, 4.02, 1.56, 0.26, 18, C.amber, { fontFace: FONTS.head, bold: true });
+  tx(slide, "prouve", 4.62, 4.02, 1.56, 0.26, 18, C.mint, { fontFace: FONTS.head, bold: true });
+  const mark = routeMark({ colors: { line: C.steel, one: C.cyan, two: C.blue, three: C.amber, four: C.mint } });
+  slide.addImage({ data: mark, x: 8.04, y: 1.64, w: 3.72, h: 2.56 });
+  rule(slide, 8.22, 5.36, 3.54, 0, C.steel, 0.9, { dash: "dash" });
+  mono(slide, "PFE 2026 · VERSION ANONYMISÉE", 8.22, 5.66, 3.54, 0.18, 8.0, C.steelLight, { align: "right", charSpacing: 0.8 });
+  note(slide, 18);
 }
 
 function placeholderSlide(number, current, title) {
@@ -564,10 +742,12 @@ slide9();
 slide10();
 slide11();
 slide12();
-for (let number = 13; number <= 18; number += 1) {
-  const current = number === 13 ? 4 : number <= 16 ? 5 : 6;
-  placeholderSlide(number, current, SLIDE_TITLES[number - 1]);
-}
+slide13();
+slide14();
+slide15();
+slide16();
+slide17();
+slide18();
 
 const output = resolve(process.env.DECK_OUTPUT ?? "dist/Agentic-Migration-Platform-Soutenance-Redesigned.pptx");
 mkdirSync(dirname(output), { recursive: true });
