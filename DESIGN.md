@@ -1,149 +1,120 @@
 # Design system — Agentic Migration Platform
 
-## 1. Direction générale
+## Direction
 
-Le deck adopte une esthétique **enterprise software / cloud / AI engineering** : sombre, précise, calme et orientée preuve. Le fond sombre sert à faire ressortir les workflows et les décisions ; les captures d'écran et les preuves peuvent utiliser des panneaux clairs seulement lorsqu'un contraste de lecture le justifie.
+Le deck adopte la direction **Migration Control Plane** : une présentation
+technique premium qui représente la migration comme une route contrôlée, avec
+des états, des gates et des preuves. Le fond graphite porte l'histoire et les
+architectures ; un fond ivoire est réservé aux preuves et aux limites afin de
+créer un contraste éditorial.
 
-Le design ne doit pas représenter un produit CGI réel. Aucun logo, nom de client, donnée, code ou écran confidentiel ne doit être ajouté sans validation explicite. La démo est identifiée comme un scénario anonymisé avec des états préparés.
+La démo reste fictive, locale et anonymisée. Aucun nom de client, code ou
+information interne CGI ne doit apparaître.
 
-## 2. Palette
+## Palette
 
 | Rôle | Nom | Hex | Usage |
 |---|---|---|---|
-| Fond | Ink | `#07131E` | Fond principal des slides. |
-| Surface | Deep Surface | `#0F2433` | Panneaux, zones de contenu, cartes principales. |
-| Surface secondaire | Blue Surface | `#153447` | Cartes secondaires et étapes inactives. |
-| Texte principal | Snow | `#F5F8FA` | Titres et informations prioritaires. |
-| Texte secondaire | Mist | `#A7BBC7` | Labels, explications courtes et notes. |
-| Ligne | Steel | `#2B485A` | Séparateurs, contours et connecteurs neutres. |
-| Agents IA | Cyan | `#6CD7F2` | Agents, raisonnement, propositions et focus actif. |
-| Services déterministes | Blue | `#4FA3FF` | Commandes, build, tests, catalogues et orchestration technique. |
-| Validation humaine | Amber | `#F7B955` | Gates, décisions, approbations et action requise. |
-| Preuve validée | Teal | `#39D7B5` | Tests réussis, artefacts scellés et revalidation. |
-| Échec | Coral | `#FF6B70` | Échec de validation, blocage ou correction demandée. |
+| Fond principal | Graphite | `#0B1117` | Story, architecture, conclusion |
+| Fond secondaire | Slate | `#131D26` | Zones techniques et surfaces ponctuelles |
+| Fond preuve | Warm Ivory | `#F3F1EA` | Slides 14–16, contraste de lecture |
+| Texte clair | Snow | `#F5F7F8` | Titres et messages principaux sur fond sombre |
+| Texte sombre | Ink | `#101820` | Titres sur fond clair |
+| Texte secondaire | Mist | `#9EADB8` | Labels, contexte et notes courtes |
+| Ligne neutre | Steel | `#344653` | Rails, séparateurs, éléments inactifs |
+| Agents / raisonnement | Cyan | `#68D6E8` | Proposition, analyse, focus actif |
+| Services déterministes | Electric Blue | `#4E9DFF` | Toolchain, orchestration, build et test |
+| Gate humaine | Amber | `#F4B84A` | Review, décision, autorisation |
+| Preuve validée | Mint | `#41D3AE` | Artefact scellé, test passé, revalidation |
+| Blocage | Coral | `#FF6F72` | Échec réel ou correction requise uniquement |
 
-Règles :
+Règles : un accent dominant et un accent secondaire maximum par slide ; jamais
+de signal par la couleur seule ; pas de glow, texture, 3D ou dégradé nécessaire.
 
-- Utiliser au maximum un accent dominant et un accent secondaire par slide.
-- Ne jamais communiquer un état par la couleur seule : associer couleur, libellé et/ou icône.
-- Réserver le corail aux éléments réellement bloquants ; ne pas dramatiser les limites.
-- Éviter les dégradés, effets néon, ombres fortes, textures et effets 3D.
+## Typographie
 
-## 3. Typographie
+- Titres et chiffres : `Aptos Display Semibold`, repli `Aptos Display`, puis
+  `Arial`.
+- Texte : `Aptos`, repli `Arial`.
+- Identifiants techniques : `Aptos Mono`, repli `Consolas`.
 
-- Titres : **Aptos Display Semibold**, repli **Aptos Display** puis **Arial**.
-- Corps : **Aptos**, repli **Arial**.
-- Ne pas dépendre d'une police non installée pour une information essentielle.
+| Élément | Taille de référence |
+|---|---:|
+| Titre de couverture | 44–52 pt |
+| Titre de slide | 32–40 pt |
+| Kicker / section | 11–14 pt |
+| Corps | 17–21 pt |
+| Annotation de diagramme | 13–16 pt |
+| Footer / source courte | 10–12 pt |
+| Mini-plan supérieur | 9–11 pt |
 
-Tailles PowerPoint de référence :
+Les titres sont directs et courts. Une slide ne doit pas dépendre d'un
+paragraphe projeté pour être comprise.
 
-| Élément | Taille | Règle |
-|---|---:|---|
-| Titre de couverture | 44–48 pt | Deux lignes maximum. |
-| Titre de slide | 32–36 pt | Formulation directe, sans slogan générique. |
-| Sous-titre / kicker | 12–14 pt | Capitales limitées, couleur Mist ou Cyan. |
-| Texte courant | 17–20 pt | 40–55 mots maximum par slide hors labels. |
-| Légende / source courte | 11–13 pt | Jamais utilisée pour porter un message essentiel. |
-| Mini-plan supérieur | 9–11 pt | Lisible, compact et constant. |
+## Grille et espacement
 
-Les titres utilisent des phrases courtes et affirmatives. Éviter les accumulations de trois slogans, les longs paragraphes, les points-virgules et les formulations vagues de type « révolutionner la migration ».
+- Canvas : 1600 × 900, format 16:9.
+- Marge latérale : 72–88 px ; marge basse : 54 px.
+- Bande de navigation : 54–72 px en haut sur les slides 3–18.
+- Unité de rythme : 8 px ; espacements privilégiés : 16, 24, 32, 48 px.
+- Rayon : 0–16 px selon le rôle ; les architectures privilégient les angles
+  nets et les lignes plutôt que des cartes arrondies.
+- Une slide utilise une grande composition et une hiérarchie claire, pas une
+  collection de composants de même poids.
 
-## 4. Grille et espacement
+## Navigation
 
-- Format : 16:9, résolution de conception 13,333 × 7,5 pouces.
-- Marge de sécurité : 0,55–0,65 pouce sur les côtés ; 0,45 pouce en bas.
-- Réserver la bande supérieure au mini-plan ; le contenu commence sous cette bande.
-- Utiliser une unité d'espacement de 8 pt : espacements usuels 8, 16, 24 et 32 pt.
-- Cartes : padding interne 16–20 pt ; gouttière entre cartes 16–24 pt.
-- Aligner les titres, diagrammes et captures sur une même colonne de départ.
-- Ne jamais réduire la taille du texte pour faire entrer un élément : supprimer, regrouper ou déplacer vers les notes.
-
-## 5. Mini-plan de progression
-
-À partir de la slide 3, afficher en haut de chaque slide :
+La slide 2 présente les sept chapitres sur une route horizontale. Les slides 3–
+18 affichent en haut :
 
 `Contexte → Solution → Architecture → Réalisation → Démo → Résultats → Conclusion`
 
-Comportement :
+Le chapitre actif reçoit la couleur de son rôle et un trait fin. Les chapitres
+passés sont atténués ou marqués d'un point mint ; les chapitres futurs utilisent
+Steel. La navigation reste secondaire et occupe moins de 8 % de la hauteur.
 
-- chapitre courant : texte Snow, accent Cyan, trait inférieur ou capsule discrète ;
-- chapitre parcouru : Mist, éventuellement coche Teal ;
-- chapitre restant : Steel/Mist, sans concurrence avec le contenu ;
-- slide 18 : Conclusion reste actif pour la discussion Q&A.
+## Diagrammes
 
-Le mini-plan est un repère narratif, pas une seconde zone de contenu. Il doit rester lisible sur fond sombre et ne pas dépasser environ 8 % de la hauteur de la slide.
+- Lire de gauche à droite ou de haut en bas.
+- Maximum 6–7 nœuds primaires par diagramme.
+- Connecteurs 2 px, sans croisements ; les gates sont des checkpoints visibles.
+- Cyan = agent/proposition ; bleu = service déterministe ; amber = humain ;
+  mint = preuve ; coral = blocage ; steel = état neutre.
+- Chaque nœud porte un nom et une action courte. L'architecture doit se lire en
+  moins de dix secondes.
+- Les agents restent bornés : ils produisent un artefact ou une proposition ;
+  les services exécutent les commandes ; l'humain garde l'autorité.
 
-## 6. Diagrammes et workflows
+## Icônes
 
-Les diagrammes doivent être créés avec des formes et connecteurs éditables dans PowerPoint lorsque leur contenu est structurel.
+Utiliser un style linéaire unique, inspiré de Lucide, avec une épaisseur
+constante. Les pictogrammes servent à clarifier un rôle (agent, humain,
+terminal, test, preuve, historique), jamais à remplir un espace vide. Aucun
+emoji ni mélange de bibliothèques.
 
-Grammaire visuelle :
+## Captures d'écran
 
-- Cyan : agent ou production de raisonnement/proposition.
-- Bleu : service déterministe, commande, build, test ou orchestration.
-- Amber : gate, décision ou intervention humaine.
-- Teal : artefact validé, preuve ou scellement.
-- Coral : échec, blocage ou correction requise.
-- Steel : contexte, état neutre ou étape non active.
+- Utiliser une capture du projet démo uniquement lorsqu'elle prouve une action.
+- Faire de la capture le visuel dominant, la recadrer sur la zone utile et
+  l'encadrer d'une ligne cyan discrète.
+- Deux annotations maximum, avec numéros ou callouts courts.
+- Ajouter : **Démo locale — scénario anonymisé, états préparés**.
+- Ne pas inventer de logs, badges ou métriques dans une capture.
 
-Règles de composition :
+## Slides techniques
 
-- lecture principale de gauche à droite ou de haut en bas ;
-- maximum 6–7 nœuds visibles dans un schéma principal ;
-- connecteurs de 1,5–2 pt, sans croisement si possible ;
-- un verbe ou une action par étape ;
-- labels de nœuds sur une à trois lignes ;
-- aucun diagramme ne doit nécessiter plus de dix secondes pour être compris.
+- Une idée dominante et un diagramme principal par slide.
+- Préférer une timeline, un pipeline, une boucle ou une matrice à des listes.
+- Distinguer visuellement `Réalisé`, `Partiel` et `Prévu`, avec texte + forme +
+  couleur.
+- Garder les hashes, chemins et détails d'environnement dans les notes, sauf
+  nécessité de preuve.
+- Afficher les limites lorsque le statut peut être mal interprété.
 
-Les flèches servent au flux, pas à décorer. Les boucles de réparation doivent montrer distinctement la proposition, la review, la décision, l'application isolée et la revalidation.
+## Preuves et confidentialité
 
-## 7. Icônes
-
-- Utiliser un seul style d'icônes linéaires, proche de Lucide, avec épaisseur constante de 1,5–2 pt.
-- Préférer les pictogrammes simples : agent, humain, terminal, code, build, test, bouclier, preuve, historique.
-- Éviter les emojis, les mix de bibliothèques, les illustrations 3D et les icônes trop détaillées.
-- Une icône accompagne un label ; elle ne remplace pas le label.
-
-## 8. Captures d'écran
-
-- Utiliser des captures réelles du projet démo ou du rapport lorsqu'elles servent une démonstration.
-- Recadrer sur la zone utile ; supprimer les barres ou informations sans valeur narrative.
-- Ajouter un cadre fin Cyan, un rayon discret et une ombre très légère.
-- Ajouter au maximum deux annotations par capture, avec repères numérotés ou callouts courts.
-- Toute capture de démo porte la mention : **Démo locale — scénario anonymisé, états préparés**.
-- Ne pas inventer de badges, métriques, logs ou résultats visuels.
-- Éviter les captures d'écrans confidentiels CGI ; les remplacer par le frontend démo ou un schéma éditable.
-
-## 9. Règles pour les slides techniques
-
-- Une idée dominante par slide, même lorsqu'un contenu est regroupé en deux zones.
-- Un diagramme principal ou une comparaison principale ; jamais plusieurs schémas concurrents.
-- Un extrait de code est limité à trois lignes et n'est utilisé que s'il prouve une transformation précise.
-- Les hashes, chemins de fichiers, noms de commits et détails d'environnement vont dans les notes du présentateur, sauf s'ils sont indispensables à la preuve affichée.
-- Distinguer visuellement `Réalisé`, `Partiel` et `Prévu`.
-- Présenter les agents comme des composants spécialisés et bornés, jamais comme des opérateurs disposant d'un terminal ou d'un accès libre au système de fichiers.
-- Montrer que la base de données porte l'état métier, que les services déterministes exécutent les commandes et que les agents produisent des artefacts ou propositions.
-- Toute décision sensible doit être reliée à un artefact, un checksum, une décision humaine et une preuve de revalidation.
-
-## 10. Règles de contenu et de preuve
-
-- Chaque chiffre affiché doit être traçable au rapport et formulé avec son périmètre.
-- Les résultats Java (607 tests réussis, 4 ignorés ; contrôles frontend ; baseline 12 → 11 échecs) sont présentés comme des preuves ponctuelles, jamais comme un benchmark.
-- Les transitions Angular 18 → 19 et 19 → 20 sont présentées comme scellées ; 20 → 21 comme préparée/non démarrée.
-- Ne pas annoncer de gain de temps global, de couverture complète Angular ou d'authentification fonctionnelle.
-- Les sources détaillées sont conservées dans les notes du présentateur : pages du rapport, documentation de démo et matrice de références du dépôt GitHub.
-- Le deck doit rester compréhensible par un jury non spécialiste sans retirer les garde-fous nécessaires à un jury technique.
-
-## 11. Motifs de layout à privilégier
-
-- Cover : titre à gauche, flux abstrait à droite.
-- Timeline : une ligne de progression et trois à cinq jalons.
-- Architecture : couches empilées ou deux pipelines parallèles.
-- Workflow : étapes horizontales avec gates visibles.
-- Réparation : boucle fermée centrée sur la décision humaine.
-- Preuves : trois cartes maximum avec chiffres ou statuts vérifiables.
-- Difficultés : matrice compacte `problème → correction`.
-- Limites/perspectives : deux colonnes `maintenant → ensuite`.
-
-Les grilles de cartes ne doivent pas devenir le langage dominant du deck. Elles sont réservées aux preuves, aux rôles d'agents et aux comparaisons courtes.
-
+Les chiffres visibles restent bornés : 607 tests backend réussis et 4 ignorés,
+contrôles frontend validés, baseline frontend 12 → 11 échecs après intégration.
+Ils sont étiquetés **preuves ponctuelles — non benchmarkées**. Les limites
+(authentification/roles non livrés, benchmark manuel absent, CI commune et
+coûts/durées non consolidés) restent explicites.
