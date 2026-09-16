@@ -1,8 +1,8 @@
 import { createRequire } from "node:module";
-import { existsSync, mkdirSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 
-import { CHAPTERS, COLORS as C, FONTS, H, SLIDE_TITLES, W } from "./redesign/theme.mjs";
+import { CHAPTERS, COLORS as C, FONTS, H, W } from "./redesign/theme.mjs";
 import { routeMark, svgDataUri } from "./redesign/svg.mjs";
 import { speakerNotes } from "./redesign/notes.mjs";
 
@@ -19,6 +19,38 @@ function loadPptxGenJS() {
     return mod.default ?? mod;
   }
   throw new Error("PptxGenJS not found. Set PPTXGENJS_HOME to its node_modules directory.");
+}
+
+function loadJSZip() {
+  const roots = [
+    process.env.PPTXGENJS_HOME,
+    process.env.CODEX_SLIDES_HOME ? `${process.env.CODEX_SLIDES_HOME}/node_modules` : "",
+    "C:/Users/aliha/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules",
+  ].filter(Boolean);
+  for (const root of roots) {
+    const pkg = resolve(root, "jszip", "package.json");
+    if (!existsSync(pkg)) continue;
+    const mod = createRequire(pkg)("jszip");
+    return mod.default ?? mod;
+  }
+  throw new Error("JSZip not found. Set PPTXGENJS_HOME to a node_modules directory containing jszip.");
+}
+
+async function normalizePptxPackage(output) {
+  const JSZip = loadJSZip();
+  const zip = await JSZip.loadAsync(readFileSync(output));
+  const contentTypes = zip.file("[Content_Types].xml");
+  if (!contentTypes) return;
+  const packageParts = new Set(Object.keys(zip.files));
+  const xml = await contentTypes.async("string");
+  const normalized = xml.replace(/<Override\b([^>]*?)\/>/g, (entry, attributes) => {
+    const partName = attributes.match(/\bPartName="([^"]+)"/);
+    if (!partName) return entry;
+    const part = partName[1].replace(/^\/+/, "");
+    return packageParts.has(part) ? entry : "";
+  });
+  zip.file("[Content_Types].xml", normalized);
+  writeFileSync(output, await zip.generateAsync({ type: "nodebuffer", compression: "DEFLATE" }));
 }
 
 const PptxGenJS = loadPptxGenJS();
@@ -720,16 +752,6 @@ function slide18() {
   note(slide, 18);
 }
 
-function placeholderSlide(number, current, title) {
-  const slide = pptx.addSlide();
-  heading(slide, number, current, CHAPTERS[current] ?? "", title, "Composition réservée à la branche de reconstruction suivante.");
-  mono(slide, "DRAFT BOUNDARY", 0.82, 2.72, 2.20, 0.18, 8.4, C.amber, { charSpacing: 1.0 });
-  rule(slide, 0.82, 3.18, 11.50, 0, C.steel, 1.4, { dash: "dash" });
-  tx(slide, "Cette slide sera remplacée par un diagramme dédié.", 0.82, 3.52, 8.20, 0.34, 22, C.snow, { fontFace: FONTS.head, bold: true });
-  tx(slide, "La structure finale est définie dans le visual redesign spec.", 0.84, 4.10, 7.20, 0.26, 12.0, C.mist, { valign: "top" });
-  note(slide, number);
-}
-
 slide1();
 slide2();
 slide3();
@@ -752,4 +774,5 @@ slide18();
 const output = resolve(process.env.DECK_OUTPUT ?? "dist/Agentic-Migration-Platform-Soutenance-Redesigned.pptx");
 mkdirSync(dirname(output), { recursive: true });
 await pptx.writeFile({ fileName: output });
+await normalizePptxPackage(output);
 console.log(`Wrote ${output}`);
