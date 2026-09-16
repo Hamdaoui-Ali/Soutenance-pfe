@@ -32,4 +32,3 @@
 - Navigation : les chapitres terminés, courant et restants sont visibles dans le rail supérieur à partir de la slide de contexte.
 - Rythme : alternance de compositions dark techniques et de slides claires pour les preuves, difficultés et perspectives.
 - Le design system et les règles de slides techniques sont documentés dans `DESIGN.md`.
-
